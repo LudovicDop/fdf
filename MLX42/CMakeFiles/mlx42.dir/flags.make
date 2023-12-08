@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -I/local-home/ldoppler/Desktop/fdf/MLX42/include
+C_INCLUDES = -I/media/ldoppler/LDOPPLER/fdf/MLX42/include
 
 C_FLAGS = -fPIC   -D LODEPNG_NO_COMPILE_ENCODER -D LODEPNG_NO_COMPILE_ANCILLARY_CHUNKS -Wextra -Wall -Werror -Wunreachable-code -Wno-char-subscripts -Wno-sign-compare -Wno-unused-parameter -Wno-missing-field-initializers -g -std=c11
 
