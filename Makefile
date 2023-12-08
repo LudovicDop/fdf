@@ -1,6 +1,5 @@
 #MAKEFLAGS += --silent
 CC = gcc -Wall -Werror -Wextra
-OBJ = $(libft:.c=.o) $(gnl:.c=.o)
 NAME = mlx.a
 all : $(NAME)
 
@@ -10,14 +9,10 @@ $(NAME) : $(OBJ)
 	echo "Creation in progress..." 
 	make -C libft/
 	mv libft/libft.a .
-	mv libft.a $(NAME)
-	make -C gnl/
-	mv gnl/gnl.a .
-	mv gnl.a $(NAME)
 	make -C MLX42/
 	mv MLX42/libmlx42.a .
-	mv libmlx42.a $(NAME)
-	ar rcs $@ $(OBJ)
+	make -C gnl/
+	mv gnl/gnl.a .
 	echo "Done!"
 clean :
 	echo "clean in progress..."
@@ -30,6 +25,6 @@ fclean : clean
 	make fclean -C libft/
 	make fclean -C gnl/
 	make clean -C MLX42/
-	rm -rf $(NAME)
+	rm -rf *.a
 	echo "Done!"
-re : fclean all $(NAME)
+re : fclean all $(NAME) 
