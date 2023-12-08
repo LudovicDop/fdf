@@ -1,6 +1,6 @@
-MAKEFLAGS += --silent
+#MAKEFLAGS += --silent
 CC = gcc -Wall -Werror -Wextra
-OBJ = $(libft:.c=.o) $(MLX42:.c=.o) $(gnl:.c=.o)
+OBJ = $(libft:.c=.o) $(gnl:.c=.o)
 NAME = mlx.a
 all : $(NAME)
 
@@ -11,12 +11,12 @@ $(NAME) : $(OBJ)
 	make -C libft/
 	mv libft/libft.a .
 	mv libft.a $(NAME)
-	make -C MLX42/
-	mv MLX42/libmlx42.a .
-	mv libmlx42.a $(NAME)
 	make -C gnl/
 	mv gnl/gnl.a .
 	mv gnl.a $(NAME)
+	make -C MLX42/
+	mv MLX42/libmlx42.a .
+	mv libmlx42.a $(NAME)
 	ar rcs $@ $(OBJ)
 	echo "Done!"
 clean :
