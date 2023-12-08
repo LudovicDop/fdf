@@ -22,4 +22,5 @@
 # endif
 
 char	*get_next_line(int fd);
+char	*ft_strjoin2(char **s1_, char **s2_);
 #endif

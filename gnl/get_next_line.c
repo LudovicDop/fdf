@@ -14,7 +14,7 @@
 
 void	start_read2(char **new_line, char **buffer)
 {
-	*new_line = ft_strjoin(new_line, buffer);
+	*new_line = ft_strjoin2(new_line, buffer);
 	*buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!*buffer)
 		return ;
@@ -115,7 +115,7 @@ char	*get_next_line(int fd)
 	}
 	tmp = start_read(fd);
 	if (stash)
-		tmp = ft_strjoin(&stash, &tmp);
+		tmp = ft_strjoin2(&stash, &tmp);
 	ret = save_for_next(&tmp);
 	save_for_stash(&tmp, &stash);
 	free(tmp);

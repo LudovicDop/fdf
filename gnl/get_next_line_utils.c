@@ -68,7 +68,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char **s1_, char **s2_)
+char	*ft_strjoin2(char **s1_, char **s2_)
 {
 	char	*ret;
 	int		i;

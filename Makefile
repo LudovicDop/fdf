@@ -1,4 +1,4 @@
-#MAKEFLAGS += --silent
+MAKEFLAGS += --silent
 CC = gcc -Wall -Werror -Wextra
 NAME = mlx.a
 all : $(NAME)
@@ -10,7 +10,6 @@ $(NAME) : $(OBJ)
 	make -C libft/
 	mv libft/libft.a .
 	make -C MLX42/
-	mv MLX42/libmlx42.a .
 	make -C gnl/
 	mv gnl/gnl.a .
 	echo "Done!"
