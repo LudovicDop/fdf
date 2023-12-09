@@ -1,7 +1,7 @@
 #ifndef MLX_H
 # define MLX_H
-# define WIDTH 256
-# define HEIGHT 256
+# define WIDTH 1080 
+# define HEIGHT 980
 # include "MLX42/MLX42.h"
 # include "../gnl/get_next_line.h"
 # include <stdio.h>
