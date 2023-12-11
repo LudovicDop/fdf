@@ -64,7 +64,7 @@ void	put_pixel_on_map(mlx_image_t* img, mlx_t* mlx, char *path)
 		}
 		i++;
 	}
-	mlx_resize_image(img, WIDTH, HEIGHT);
+	//mlx_resize_image(img, WIDTH * 3, HEIGHT * 3);
 	while (*tab)
 	{
 		printf("%s",*tab);
