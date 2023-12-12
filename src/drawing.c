@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/12 16:40:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:40:28 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,37 +39,25 @@ int	open_file(char *path)
 	return (fd);
 }
 
-void	put_pixel_on_map(mlx_image_t *img, mlx_t *mlx, char *path)
+void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
 	char	**tab;
 	coord_t	*coord;
 	int		i;
 
-	i = 0;
-	coord->x = 0;
-	coord->y = 0;
-	coord->z = 0;
-	fd = open_file(path);
-	tab = get_line(fd);
-	while (tab[i])
-	{
-		mlx_put_pixel(img, coord->x + (img->width / 2), coord->y + (img->height
-				/ 2), 0xFF000000);
-		if (tab[i][1] != '\n')
-		{
-			coord->x++;
-		}
-		else
-		{
-			coord->x = 0;
-			coord->y++;
-		}
-		i++;
-	}
-	while (*tab)
-	{
-		printf("%s", *tab);
-		*tab++;
-	}
+	// i = 0;
+	// coord->x = 0;
+	// coord->y = 0;
+	// coord->z = 0;
+	//fd = open_file(path);
+	//tab = get_line(fd);
+    printf("le dop\n");
+	mlx_put_pixel(info->img, 100, 100, 0xFF0000FF);
+    mlx_put_pixel(info->img, 101, 100, 0xFF0000FF);
+    mlx_put_pixel(info->img, 102, 100, 0xFF0000FF);
+    mlx_put_pixel(info->img, 103, 100, 0xFF0000FF);
+	mlx_image_to_window(info->mlx, info->img, 0, 0);
+	info->refresh = 0;
+	//mlx_image_to_window(info->mlx, info->img, 0, 0);
 }

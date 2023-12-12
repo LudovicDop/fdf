@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:28:29 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/12 15:21:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:11:23 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,4 @@ void	init_loop_hook(t_info *info)
 {
 	mlx_loop_hook(info->mlx, ft_hook, info);
 	mlx_resize_hook(info->mlx, ft_hook_resize, info);
-	mlx_loop(info->mlx);
 }

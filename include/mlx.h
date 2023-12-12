@@ -10,6 +10,8 @@ typedef struct s_info
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	int			refresh;
+	char		*path;
 }				t_info;
 
 typedef struct coord_s
@@ -27,7 +29,7 @@ int				init(t_info *info);
 void			init_loop_hook(t_info *info);
 void			error(void);
 void			destroy_loop_hook(t_info *info);
-void			put_pixel_on_map(mlx_image_t *img, mlx_t *mlx, char *path);
+void			put_pixel_on_map(t_info* info, char *path);
 int				open_file(char *path);
 char			**get_line(int fd);
 #endif
