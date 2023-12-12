@@ -1,11 +1,5 @@
 #include "include/mlx.h"
 
-static void error(void)
-{
-	puts(mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
-
 /*Stockage des informations de la map dans une variable char*/
 char	**get_line(int fd)
 {
@@ -34,6 +28,7 @@ int	open_file(char *path)
 	return (fd);
 	
 }
+
 void	put_pixel_on_map(mlx_image_t* img, mlx_t* mlx, char *path)
 {
 	int	fd;
@@ -74,24 +69,20 @@ void	put_pixel_on_map(mlx_image_t* img, mlx_t* mlx, char *path)
 
 int	main(int argc, char **argv)
 {
+	t_info	*info;
+
+	if (!info)
+		return (1);
+	
 	if (argc == 2)
 	{
-		mlx_set_setting(MLX_MAXIMIZED, true);
-		mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42FDF", true);
-		if (!mlx)
-			error();
-		mlx_image_t* img = mlx_new_image(mlx, mlx->width, mlx->height);
-		if (!img)
-			error();
-		if (mlx_image_to_window(mlx, img, 0, 0) < 0)
-			error();
-		ft_memset(img->pixels, 255, img->width * img->height * sizeof(int32_t));
-		put_pixel_on_map(img, mlx, argv[1]);
-		mlx_loop_hook(mlx, ft_hook, mlx);
-		mlx_loop(mlx);
-		mlx_delete_image(mlx, img);
-		mlx_terminate(mlx);
-		return (EXIT_SUCCESS);
+		info = ft_calloc(1, sizeof(t_info));
+		init(info);
+		init_loop_hook(info);
+
+
+
+		destroy_loop_hook(info);
 	}
 	return (0);
 } 
