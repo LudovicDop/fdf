@@ -27,4 +27,7 @@ int				init(t_info *info);
 void			init_loop_hook(t_info *info);
 void			error(void);
 void			destroy_loop_hook(t_info *info);
+void			put_pixel_on_map(mlx_image_t *img, mlx_t *mlx, char *path);
+int				open_file(char *path);
+char			**get_line(int fd);
 #endif
