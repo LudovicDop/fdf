@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/13 14:38:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:54:31 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ void	put_pixel_on_map(t_info* info, char *path)
 		while (*buffer)
 		{
 			mlx_put_pixel(info->img, coord->x + (info->img->width / 2), coord->y + (info->img->height / 2), 0xFFFFFFFF);
-			coord->x+= info->img->width / 50;
-			printf("img width = %d",info->img->width);
-			printf("%d\n",coord->x);
+			//mlx_put_pixel(info->img, coord->x, coord->y, 0xFFFFFFFF);
+			coord->x+= 20;
+			printf("img width = %u\n",info->img->width);
+			printf("img height = %u\n",info->img->height);
+			//printf("%d\n",coord->x);
 			*buffer++;
 		}
 		if (*buffer == NULL)
@@ -50,10 +52,10 @@ void	put_pixel_on_map(t_info* info, char *path)
 			tmp = get_next_line(fd);
 			buffer = ft_split(tmp,' ');
 			coord->x = 0;
-			coord->y+= info->img->height / 50;
+			coord->y+= 20;
 			printf("%d\n",coord->y);
 		}
 	}
-	mlx_image_to_window(info->mlx, info->img, 0, 0);
+	//mlx_image_to_window(info->mlx, info->img, 250, 250);
 	info->refresh = 0;
 }
