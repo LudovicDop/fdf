@@ -12,14 +12,13 @@ typedef struct s_info
 	mlx_image_t	*img;
 	int			refresh;
 	char		*path;
+	int			x0;
+	int			y0;
+	int			z0;
+	int			x1;
+	int			y1;
+	int			z1;
 }				t_info;
-
-typedef struct coord_s
-{
-	int			x;
-	int			y;
-	int			z;
-}				coord_t;
 
 void			ft_hook(void *param);
 void			resize_img(mlx_image_t *img, unsigned int width,
@@ -31,4 +30,5 @@ void			error(void);
 void			destroy_loop_hook(t_info *info);
 void			put_pixel_on_map(t_info* info, char *path);
 int				open_file(char *path);
+char    		**ft_split_for_mlx(char *string);
 #endif

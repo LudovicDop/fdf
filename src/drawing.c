@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/13 14:54:31 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/15 16:21:41 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,40 +22,56 @@ int	open_file(char *path)
 	return (fd);
 }
 
+char	*remove_space(char *string)
+{
+	int		i;
+	int		k;
+	char	*ret;
+
+	k = 0;
+	i = 0;
+	while (string[i])
+	{
+		if (string[i] != ' ')
+			k++;
+		i++;
+	}
+	ret = malloc(sizeof(char) * k + 1);
+	i = 0;
+	k = 0;
+	while (string[i])
+	{
+		if (string[i] != ' ')
+		{
+			ret[k] = string[i];
+			k++;
+		}
+		i++;
+	}
+	ret[k] = '\0';
+	return (free(string), ret);
+}
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
+	char **tab2d;
+	char *tab;
 	char *tmp;
-	char **buffer;
-	coord_t *coord;
-	
-	coord = ft_calloc(1, sizeof(coord_t));
-	coord->x = 0;
-	coord->y = 0;
+	char test;
+
+	tab = ft_calloc(1, 1);
 	fd = open_file(path);
-	tmp = get_next_line(fd);
-	buffer = ft_split(tmp,' ');
 	while (tmp)
 	{
-		while (*buffer)
-		{
-			mlx_put_pixel(info->img, coord->x + (info->img->width / 2), coord->y + (info->img->height / 2), 0xFFFFFFFF);
-			//mlx_put_pixel(info->img, coord->x, coord->y, 0xFFFFFFFF);
-			coord->x+= 20;
-			printf("img width = %u\n",info->img->width);
-			printf("img height = %u\n",info->img->height);
-			//printf("%d\n",coord->x);
-			*buffer++;
-		}
-		if (*buffer == NULL)
-		{
-			tmp = get_next_line(fd);
-			buffer = ft_split(tmp,' ');
-			coord->x = 0;
-			coord->y+= 20;
-			printf("%d\n",coord->y);
-		}
+		tmp = get_next_line(fd);
+		tab = ft_strjoin(tab, tmp);
 	}
-	//mlx_image_to_window(info->mlx, info->img, 250, 250);
+	ft_split_for_mlx(tab);
+	printf("OK\n");
+	tab = remove_space(tab);
+	printf("END\n");
+	tab2d = ft_split(tab,'\n');
+	printf("%c\n",tab2d[2][2]);
+	mlx_image_to_window(info->mlx, info->img, 250, 250);
 	info->refresh = 0;
 }
