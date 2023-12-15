@@ -47,10 +47,15 @@ static char **implement(char *string, char **ret)
     {
         if (string[i] != ' ' && string[i] != '\n')
         {
+	    printf("stock ret[%d][%d] = %c\n",j,k,string[i]);	
             ret[j][k] = string[i];
+	    k++;
         }
         if (string[i] == '\n')
+	{
             j++;
+	    k = 0;
+	}
         i++;
     }
 }
@@ -90,6 +95,6 @@ char    **ft_split_for_mlx(char *string)
     printf("How_many_split = %d\n",how_many_split(string));
     ret = (char**)ft_calloc(how_many_split(string) + 1,sizeof(char*));
     each_word_memory(string,ret);
-
+    implement(string, ret);
     return (NULL);
 }

@@ -68,10 +68,10 @@ void	put_pixel_on_map(t_info* info, char *path)
 	}
 	ft_split_for_mlx(tab);
 	printf("OK\n");
-	tab = remove_space(tab);
+	//tab = remove_space(tab);
 	printf("END\n");
-	tab2d = ft_split(tab,'\n');
-	printf("%c\n",tab2d[2][2]);
+	//tab2d = ft_split(tab,'\n');
+	//printf("%c\n",tab2d[2][2]);
 	mlx_image_to_window(info->mlx, info->img, 250, 250);
 	info->refresh = 0;
 }
