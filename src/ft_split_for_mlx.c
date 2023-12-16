@@ -6,14 +6,14 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/16 17:40:25 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:45:12 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdio.h>
 
-int first_dimension(char *string)
+static int first_dimension(char *string)
 {
     int i;
     int k;
@@ -36,7 +36,7 @@ int first_dimension(char *string)
     }
 }
 
-int second_dimension(char *string,char ***ret)
+static int second_dimension(char *string,char ***ret)
 {
     int i;
     int x;
@@ -59,7 +59,7 @@ int second_dimension(char *string,char ***ret)
     }
 }
 
-int each_word(char *string, char ***ret)
+static int each_word(char *string, char ***ret)
 {
     int i;
     int x;
@@ -98,6 +98,42 @@ int each_word(char *string, char ***ret)
         i++;
     }
 }
+static char*** implement(char *string, char ***ret)
+{
+    int i;
+    int x;
+    int y;
+    int each_word;
+
+    x = 0;
+    y = 0;
+    i = 0;
+    while (string[i])
+    {
+        if (string[i] != ' ' && string[i] != '\n')
+        {
+            printf("ret[%d][%d][%d] = %c\n",x, y,each_word, string[i]);
+            each_word++;
+        }
+        if (string[i] == '\n')
+        {
+            //printf("=>ret[%d][%d] = %c\n",x, y, string[i]);
+            //printf("ret[%d][%d] = %c\n",x, y, string[i]);
+            //printf("each_word = %d\n",each_word);
+            each_word = 0;
+            x = 0;
+            y++;
+        }
+        if (string[i] == ' ')
+        {
+            //printf("ret[%d][%d] = %c\n",x, y, string[i]);
+            //printf("each_word = %d\n",each_word);
+            each_word = 0;
+            x++;
+        }
+        i++;
+    }
+}
 
 char    ***ft_split_for_mlx(char *string)
 {
@@ -106,4 +142,5 @@ char    ***ft_split_for_mlx(char *string)
     ret = (char***)ft_calloc(sizeof(char**),first_dimension(string));
     second_dimension(string, ret);
     each_word(string,ret);
+    implement(string,ret);
 }
