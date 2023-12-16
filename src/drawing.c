@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/16 17:55:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:57:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 		tab = ft_strjoin(tab, tmp);
 	}
 	tab2d = ft_split_for_mlx(tab);
-	printf("ici %s\n",tab2d[1][1]);
+	printf("ici %s\n",tab2d[2][2]);
 	printf("OK\n");
 	//tab = remove_space(tab);
 	printf("END\n");
