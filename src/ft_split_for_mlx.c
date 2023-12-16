@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/16 17:06:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:40:25 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int second_dimension(char *string,char ***ret)
         if (string[i] == ' ' || string[i] == '\n')
         {
             printf("ret[%d] = x\n",x);
-            ret[x] = (char**)ft_calloc(sizeof(char*), 1);
+            ret[x] = (char**)ft_calloc(sizeof(char*), first_dimension(string));
             x++;
         }
         if (string[i] == '\n')
@@ -64,24 +64,37 @@ int each_word(char *string, char ***ret)
     int i;
     int x;
     int y;
-    int z;
+    int each_word;
 
+    each_word = 0;
     x = 0;
     y = 0;
-    z = 0;
     i = 0;
     while (string[i])
     {
         if (string[i] != ' ' && string[i] != '\n')
         {
-            printf("ret[%d][%d][%d] = %c\n",x, y, z, string[i]);
+            each_word++;
+            //printf("ret[%d][%d] = %c\n",x, y, string[i]);
         }
         if (string[i] == '\n')
         {
+            //printf("=>ret[%d][%d] = %c\n",x, y, string[i]);
+            printf("ret[%d][%d] = %c\n",x, y, string[i]);
+            ret[x][y] = (char*)ft_calloc(sizeof(char),each_word + 1);
+            printf("each_word = %d\n",each_word);
+            each_word = 0;
+            x = 0;
             y++;
         }
         if (string[i] == ' ')
+        {
+            printf("ret[%d][%d] = %c\n",x, y, string[i]);
+            printf("each_word = %d\n",each_word);
+            ret[x][y] = (char*)ft_calloc(sizeof(char),each_word + 1);
+            each_word = 0;
             x++;
+        }
         i++;
     }
 }
