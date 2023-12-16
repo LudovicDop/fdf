@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/16 17:45:12 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:54:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int first_dimension(char *string)
     {
         if (string[i] == ' ')
         {
-            printf("ok\n");
+            //printf("ok\n");
             k++;
         }
         if (string[i] == '\n')
         {
-            printf("malloc first dimension = %d\n",k + 1);
+            //printf("malloc first dimension = %d\n",k + 1);
             return (k++);
         }
         i++;
@@ -49,7 +49,7 @@ static int second_dimension(char *string,char ***ret)
     {
         if (string[i] == ' ' || string[i] == '\n')
         {
-            printf("ret[%d] = x\n",x);
+            //printf("ret[%d] = x\n",x);
             ret[x] = (char**)ft_calloc(sizeof(char*), first_dimension(string));
             x++;
         }
@@ -80,17 +80,17 @@ static int each_word(char *string, char ***ret)
         if (string[i] == '\n')
         {
             //printf("=>ret[%d][%d] = %c\n",x, y, string[i]);
-            printf("ret[%d][%d] = %c\n",x, y, string[i]);
+            //printf("ret[%d][%d] = %c\n",x, y, string[i]);
             ret[x][y] = (char*)ft_calloc(sizeof(char),each_word + 1);
-            printf("each_word = %d\n",each_word);
+            //printf("each_word = %d\n",each_word);
             each_word = 0;
             x = 0;
             y++;
         }
         if (string[i] == ' ')
         {
-            printf("ret[%d][%d] = %c\n",x, y, string[i]);
-            printf("each_word = %d\n",each_word);
+            //printf("ret[%d][%d] = %c\n",x, y, string[i]);
+            //printf("each_word = %d\n",each_word);
             ret[x][y] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             x++;
@@ -112,7 +112,8 @@ static char*** implement(char *string, char ***ret)
     {
         if (string[i] != ' ' && string[i] != '\n')
         {
-            printf("ret[%d][%d][%d] = %c\n",x, y,each_word, string[i]);
+            //printf("ret[%d][%d][%d] = %c\n",x, y,each_word, string[i]);
+            ret[x][y][each_word] = string[i];
             each_word++;
         }
         if (string[i] == '\n')
@@ -120,6 +121,8 @@ static char*** implement(char *string, char ***ret)
             //printf("=>ret[%d][%d] = %c\n",x, y, string[i]);
             //printf("ret[%d][%d] = %c\n",x, y, string[i]);
             //printf("each_word = %d\n",each_word);
+            //printf("ret[%d][%d][%d] = %c\n",x, y,each_word, string[i]);
+            ret[x][y][each_word] = '\0';
             each_word = 0;
             x = 0;
             y++;
@@ -128,6 +131,8 @@ static char*** implement(char *string, char ***ret)
         {
             //printf("ret[%d][%d] = %c\n",x, y, string[i]);
             //printf("each_word = %d\n",each_word);
+            //printf("ret[%d][%d][%d] = %c\n",x, y,each_word, string[i]);
+            ret[x][y][each_word] = '\0';
             each_word = 0;
             x++;
         }
@@ -143,4 +148,5 @@ char    ***ft_split_for_mlx(char *string)
     second_dimension(string, ret);
     each_word(string,ret);
     implement(string,ret);
+    return (ret);
 }
