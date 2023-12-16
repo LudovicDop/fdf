@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/15 16:21:41 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:52:01 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*remove_space(char *string)
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
-	char **tab2d;
+	char ***tab2d;
 	char *tab;
 	char *tmp;
 	char test;

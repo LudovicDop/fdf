@@ -6,14 +6,14 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/15 17:26:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/16 17:06:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdio.h>
 
-static int how_many_split(char *string)
+int first_dimension(char *string)
 {
     int i;
     int k;
@@ -22,79 +22,75 @@ static int how_many_split(char *string)
     i = 0;
     while (string[i])
     {
-        if (string[i] != ' ' && string[i] != '\n' && string[i])
+        if (string[i] == ' ')
         {
-            printf("string[%d] = %c\n",i,string[i]);
+            printf("ok\n");
             k++;
-            while (string[i] != ' ' && string[i] != '\n' && string[i])
-                i++;
         }
-            i++;
+        if (string[i] == '\n')
+        {
+            printf("malloc first dimension = %d\n",k + 1);
+            return (k++);
+        }
+        i++;
     }
-    return (k);
 }
 
-static char **implement(char *string, char **ret)
+int second_dimension(char *string,char ***ret)
 {
     int i;
-    int j;
-    int k;
+    int x;
+    int y;
 
-    j = 0;
-    k = 0;
+    y = 0;
+    x = 0;
     i = 0;
-    while(string[i])
+    while (string[i])
+    {
+        if (string[i] == ' ' || string[i] == '\n')
+        {
+            printf("ret[%d] = x\n",x);
+            ret[x] = (char**)ft_calloc(sizeof(char*), 1);
+            x++;
+        }
+        if (string[i] == '\n')
+            break;;
+        i++;
+    }
+}
+
+int each_word(char *string, char ***ret)
+{
+    int i;
+    int x;
+    int y;
+    int z;
+
+    x = 0;
+    y = 0;
+    z = 0;
+    i = 0;
+    while (string[i])
     {
         if (string[i] != ' ' && string[i] != '\n')
         {
-	    printf("stock ret[%d][%d] = %c\n",j,k,string[i]);	
-            ret[j][k] = string[i];
-	    k++;
+            printf("ret[%d][%d][%d] = %c\n",x, y, z, string[i]);
         }
         if (string[i] == '\n')
-	{
-            j++;
-	    k = 0;
-	}
-        i++;
-    }
-}
-
-static int  each_word_memory(char *string, char **ret)
-{
-    int i;
-    int k;
-    int j;
-    int o;
-    
-    j = 0;
-    k = 0;
-    k = 0;
-    i = 0;
-    while (string[i])
-    {
-        k = 0;
-        while (string[i] != ' ' && string[i] != '\n')
         {
-            k++;
-            i++;
+            y++;
         }
-        printf("Each word : %d\n",k);
-        printf("ret[%d] = %d\n",j,k);
-        ret[j] = (char*)ft_calloc(1, sizeof(char) * k + 1);
-        j++;
+        if (string[i] == ' ')
+            x++;
         i++;
     }
 }
-char    **ft_split_for_mlx(char *string)
-{
-    char    **ret;
 
-    if (!string)
-        return (NULL);
-    printf("How_many_split = %d\n",how_many_split(string));
-    ret = (char**)ft_calloc(how_many_split(string) + 1,sizeof(char*));
-    each_word_memory(string,ret);
-    implement(string, ret);
-    return (NULL);
+char    ***ft_split_for_mlx(char *string)
+{
+    char    ***ret;
+
+    ret = (char***)ft_calloc(sizeof(char**),first_dimension(string));
+    second_dimension(string, ret);
+    each_word(string,ret);
 }
