@@ -12,6 +12,7 @@ typedef struct s_info
 	mlx_image_t	*img;
 	int			refresh;
 	char		*path;
+	char		***tab2d;
 	int			x0;
 	int			y0;
 	int			z0;
@@ -19,6 +20,14 @@ typedef struct s_info
 	int			y1;
 	int			z1;
 }				t_info;
+
+typedef struct s_increase
+{
+	int	i;
+	int j;
+	int	k;
+	int	l;
+}				t_increase;
 
 void			ft_hook(void *param);
 void			resize_img(mlx_image_t *img, unsigned int width,

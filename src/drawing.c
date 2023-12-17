@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/16 18:15:04 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/17 17:40:12 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,13 @@ char	*remove_space(char *string)
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
-	char ***tab2d;
 	char *tab;
 	char *tmp;
-	char test;
+	t_increase increase;
 
+	increase.i = 0;
+	increase.j = 0;
+	increase.k = 0;
 	tab = ft_calloc(1, 1);
 	fd = open_file(path);
 	while (tmp)
@@ -66,11 +68,18 @@ void	put_pixel_on_map(t_info* info, char *path)
 		tmp = get_next_line(fd);
 		tab = ft_strjoin(tab, tmp);
 	}
-	tab2d = ft_split_for_mlx(tab);
-	printf("ici %s\n",tab2d[6][0]);
-	//tab = remove_space(tab);
-	//tab2d = ft_split(tab,'\n');
-	//printf("%c\n",tab2d[2][2]);
+	info->tab2d = ft_split_for_mlx(tab);
+	//printf("tab[%d][%d] = %p\n",increase.i, increase.j,info->tab2d[7]);
+	while (info->tab2d[increase.i] != NULL)
+	{
+		increase.j = 0;
+		while (info->tab2d[increase.i][increase.j] != NULL)
+		{
+				printf("tab[%d][%d] = %s\n",increase.i, increase.j,info->tab2d[increase.i][increase.j]);
+				increase.j++;
+		}
+		increase.i++;
+	}
 	mlx_image_to_window(info->mlx, info->img, 250, 250);
 	info->refresh = 0;
 }

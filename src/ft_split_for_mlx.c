@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/16 17:54:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/17 18:03:49 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ static int first_dimension(char *string)
             k++;
         }
         if (string[i] == '\n')
-        {
-            //printf("malloc first dimension = %d\n",k + 1);
-            return (k++);
+        {  
+            k++;
+            //printf("malloc first dimension = %d\n",k);
+            return (k);
         }
         i++;
     }
@@ -50,7 +51,7 @@ static int second_dimension(char *string,char ***ret)
         if (string[i] == ' ' || string[i] == '\n')
         {
             //printf("ret[%d] = x\n",x);
-            ret[x] = (char**)ft_calloc(sizeof(char*), first_dimension(string));
+            ret[x] = (char**)ft_calloc(sizeof(char*), first_dimension(string) + 1);
             x++;
         }
         if (string[i] == '\n')
@@ -144,7 +145,7 @@ char    ***ft_split_for_mlx(char *string)
 {
     char    ***ret;
 
-    ret = (char***)ft_calloc(sizeof(char**),first_dimension(string));
+    ret = (char***)ft_calloc(sizeof(char**),first_dimension(string) + 1);
     second_dimension(string, ret);
     each_word(string,ret);
     implement(string,ret);
