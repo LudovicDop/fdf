@@ -15,7 +15,7 @@ $(NAME) : $(OBJ)
 	make -C gnl/
 	mv gnl/gnl.a .
 	$(CC) src/*.c -L. gnl.a -lft -LMLX42 -lmlx42 -IMLX42/include -I./ -ldl -lglfw -pthread -lm -o fdf
-	echo "Done!"
+	echo "Done ✅"
 clean : 
 	echo "clean in progress..."
 	rm -rf *.a
@@ -23,12 +23,12 @@ clean :
 	make clean -C gnl/ 
 	make clean -C MLX42/
 	rm -rf $(OBJ)
-	echo "Done!"
+	echo "Clean ✅ "
 fclean : clean
 	echo "fclean in progress..."
 	make fclean -C libft/
 	make fclean -C gnl/
 	rm -rf ./MLX42/CMakeFiles ./MLX42/CMakeCache.txt 
 	rm -rf fdf
-	echo "Done!"
+	echo "Fclean ✅"
 re : fclean all $(NAME) 
