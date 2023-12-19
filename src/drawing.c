@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/19 16:47:50 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/19 17:09:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,11 @@ char	*remove_space(char *string)
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
+	//t_increase x;
 	char *tab;
 	char *tmp;
 
+	///x.i = 0;
 	tab = ft_calloc(1, 1);
 	fd = open_file(path);
 	while (tmp)
@@ -65,7 +67,12 @@ void	put_pixel_on_map(t_info* info, char *path)
 		tab = ft_strjoin(tab, tmp);
 	}
 	info->tab2d = ft_split_for_mlx(tab);
-	printf("ret[%d][%d] = %s\n",0,2,info->tab2d[0][2]);
+	printf("ret[%d][%d] = %s\n",0,2,info->tab2d[2][2]);
+	// while (info->tab2d[x.i])
+	// {
+	// 	if 
+	// 	x.i++;
+	// }
 	mlx_image_to_window(info->mlx, info->img, 250, 250);
 	info->refresh = 0;
 }
