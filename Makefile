@@ -14,7 +14,7 @@ $(NAME) : $(OBJ)
 	make -C MLX42/
 	make -C gnl/
 	mv gnl/gnl.a .
-	gcc src/*.c -L. gnl.a -lft -LMLX42 -lmlx42 -IMLX42/include -I./ -ldl -lglfw -pthread -lm -o fdf
+	$(CC) src/*.c -L. gnl.a -lft -LMLX42 -lmlx42 -IMLX42/include -I./ -ldl -lglfw -pthread -lm -o fdf
 	echo "Done!"
 clean : 
 	echo "clean in progress..."

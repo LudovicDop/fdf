@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/12 18:45:15 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:16:33 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	resize_img(mlx_image_t *img, unsigned int width, unsigned int height)
 
 	mlx_resize_image(img, width, height);
 	y = 0;
-	while (y < img->height)
+	while ((uint32_t)y < img->height)
 	{
 		x = 0;
-		while (x < img->width)
+		while ((uint32_t)x < img->width)
 		{
 			mlx_put_pixel(img, x, y, 0x000000FF);
 			x++;
