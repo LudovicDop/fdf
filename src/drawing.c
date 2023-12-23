@@ -75,7 +75,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 	while (info->tab2d[x.i])
 	{
 		x.j = 0;
-		while(info->tab2d[x.i][x.j])
+		while (info->tab2d[x.i][x.j])
 		{
 			printf("tab[%d][%d] = %s\n",x.i,x.j,info->tab2d[x.i][x.j]);
 			x.j++;

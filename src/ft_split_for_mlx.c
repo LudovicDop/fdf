@@ -70,7 +70,7 @@ static void each_word(char *string, char ***ret)
     x.j = 0;
     x.k = 0;
     each_word = 0;
-    while (string[x.i])
+    while (string[x.i] && ret[x.k])
     {
         while (string[x.i] != ' ' && string[x.i] != '\n')
         {
@@ -79,6 +79,7 @@ static void each_word(char *string, char ***ret)
         }
         if (string[x.i] == '\n')
         {
+	    printf(":ret[%d][%d]\n",x.k, x.j);
             ret[x.k][x.j++] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             x.k = 0;
@@ -86,10 +87,16 @@ static void each_word(char *string, char ***ret)
         }
         if (string[x.i] == ' ')
         {
+	    printf("ret[%d][%d]\n",x.k, x.j);
             ret[x.k++][x.j] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             while (string[x.i++] && string[x.i] == ' ');
         }
+	if (string[x.i] == '\0')
+	{
+		printf("daxa\n");
+		break;
+	}
     }
 }
 
@@ -104,8 +111,13 @@ static void implement(char *string, char ***ret)
     each_word = 0;
     while (string[x.i])
     {
+	if (string[x.i + 1] == '\0')
+		break;
         while (string[x.i] != ' ' && string[x.i] != '\n')
+	{
+	    //printf("ret[%d][%d][%d] = %c\n",x.k, x.j, each_word, string[x.i]);
             ret[x.k][x.j][each_word++] = string[x.i++]; 
+	}
         if (string[x.i] == '\n')
         {
             each_word = 0;
