@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /media/ldoppler/LDOPPLER/fdf/MLX42
+CMAKE_SOURCE_DIR = /home/ldoppler/Desktop/fdf/MLX42
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /media/ldoppler/LDOPPLER/fdf/MLX42
+CMAKE_BINARY_DIR = /home/ldoppler/Desktop/fdf/MLX42
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -132,9 +132,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/ldoppler/LDOPPLER/fdf/MLX42/CMakeFiles /media/ldoppler/LDOPPLER/fdf/MLX42//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ldoppler/Desktop/fdf/MLX42/CMakeFiles /home/ldoppler/Desktop/fdf/MLX42//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/ldoppler/LDOPPLER/fdf/MLX42/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ldoppler/Desktop/fdf/MLX42/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
