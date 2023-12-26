@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/19 17:56:08 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/26 18:49:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,16 @@ char	*remove_space(char *string)
 	ret[k] = '\0';
 	return (free(string), ret);
 }
+
+void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
+{
+	float slope = (float)(y1 - y0) / (float)(x1 - x0);
+	for(int i = x0; i <= x1; ++i)
+	{
+		float y = slope * (i - x0) + y0;
+		mlx_put_pixel(info->img, i,y, 0xFFFFFFFF);
+	}
+}
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
@@ -58,9 +68,10 @@ void	put_pixel_on_map(t_info* info, char *path)
 	char *tab;
 	char *tmp;
 
-	// info->x0 = 0;
-	// info->x1 = 0;
-	// info->y0 = 0;
+	info->y0 = 10;
+	info->x0 = 0;
+	info->x1 = 100;
+	info->y1 = 200;
 	x.i = 0;
 	x.j = 0;
 	tab = ft_calloc(1, 1);
@@ -71,7 +82,6 @@ void	put_pixel_on_map(t_info* info, char *path)
 		tab = ft_strjoin(tab, tmp);
 	}
 	info->tab2d = ft_split_for_mlx(tab);
-	//printf("ret[%d][%d] = %s\n",0,2,info->tab2d[2][2]);
 	while (info->tab2d[x.i])
 	{
 		x.j = 0;
@@ -82,6 +92,8 @@ void	put_pixel_on_map(t_info* info, char *path)
 		}
 		x.i++;
 	}
-	mlx_image_to_window(info->mlx, info->img, 250, 250);
-	info->refresh = 0;
+	
+	link_pxl(info, 0, 10, 100, 200);
 }
+
+
