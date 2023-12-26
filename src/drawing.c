@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/26 18:49:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/26 19:32:09 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	put_pixel_on_map(t_info* info, char *path)
 	char *tab;
 	char *tmp;
 
-	info->y0 = 10;
-	info->x0 = 0;
-	info->x1 = 100;
-	info->y1 = 200;
+	info->y0 = 30;
+	info->x0 = 500;
+	info->x1 = 1010;
+	info->y1 = 30;
 	x.i = 0;
 	x.j = 0;
 	tab = ft_calloc(1, 1);
@@ -87,13 +87,14 @@ void	put_pixel_on_map(t_info* info, char *path)
 		x.j = 0;
 		while (info->tab2d[x.i][x.j])
 		{
+			link_pxl(info, info->x0, info->y0+=5, info->x1, info->y1+=5);
 			printf("tab[%d][%d] = %s\n",x.i,x.j,info->tab2d[x.i][x.j]);
 			x.j++;
 		}
 		x.i++;
 	}
 	
-	link_pxl(info, 0, 10, 100, 200);
+	// link_pxl(info, 0, 10, 100, 200);
 }
 
 
