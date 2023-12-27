@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/28 00:30:33 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2023/12/28 00:53:46 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,13 +137,13 @@ void	put_pixel_on_map(t_info* info, char *path)
 			printf("\n");
 			printf("1Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
 			printf("2Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0 + 1][info->y0]);
-			//link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, (info->x0 + 1) * SCALE, info->y0 * SCALE);
+			link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, (info->x0 + 1) * SCALE, info->y0 * SCALE);
 			printf("\n");
 			if (info->tab2d[info->x0][info->y0 + 1])
 			{
 				printf("3Tab[%d][%d] = %s\n",info->x0 , info->y0,info->tab2d[info->x0][info->y0]);
 				printf("4Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0 + 1]);
-				//link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, info->x0 * SCALE, (info->y0 + 1));
+				link_pxl(info, info->x0, info->y0, info->x0 * SCALE, info->y0 * SCALE);
 			}
 			info->x0++;
 		}
@@ -154,7 +154,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 			{
 				printf("6tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
 				printf("5tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0 + 1]);
-				//link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, info->x0 * SCALE, (info->y0 + 1) * SCALE);
+				link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, info->x0 * SCALE, (info->y0 + 1)* SCALE);
 			}
 			info->x0 = 0;
 			if (info->tab2d[info->x0][info->y0 + 1])
