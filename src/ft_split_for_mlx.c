@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_for_mlx.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/27 14:55:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/27 22:46:32 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void each_word(char *string, char ***ret)
         }
         if (string[x.i] == '\n')
         {
-	        //printf("2) :ret[%d][%d]\n",x.k, x.j);
+	        printf("2) :ret[%d][%d]\n",x.k, x.j);
             ret[x.k][x.j++] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             x.k = 0;
@@ -88,7 +88,7 @@ static void each_word(char *string, char ***ret)
         }
         if (string[x.i] == ' ')
         {
-	        //printf("1) ret[%d][%d]\n",x.k, x.j);
+	        printf("1) ret[%d][%d]\n",x.k, x.j);
             ret[x.k++][x.j] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             while (string[x.i++] && string[x.i] == ' ');

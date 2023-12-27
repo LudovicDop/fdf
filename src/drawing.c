@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/27 17:20:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/27 23:50:48 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
-	t_increase x;
+	//t_increase x;
 	char *tab;
 	char *tmp;
 	
@@ -125,16 +125,36 @@ void	put_pixel_on_map(t_info* info, char *path)
 	// 	x.i = 0;s
 	// 	x.j++;
 	// }
-	x.i = 0;
-	x.j = 0;
-	while(info->tab2d[x.i])
+	info->x0 = 0;
+	info->y0 = 0;
+	int end;
+	
+	end = 0;
+	while (info->tab2d[info->x0] && end != 1)
 	{
-		while(info->tab2d[x.i][x.j])
+		if (info->tab2d[info->x0 + 1])
 		{
-			link_pxl(info, x.i * SCALE, x.j * 2, (x.i + 1) * SCALE, (x.j) * 2);
-			x.j++;
+			printf("\n");
+			printf("1Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
+			printf("2Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0 + 1][info->y0]);
+			printf("\n");
+			printf("3Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
+			printf("4Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0 + 1]);
+			info->x0++;
 		}
-		x.i++;
+		else
+		{
+			printf("\n");
+			printf("6tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
+			printf("5tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0 + 1]);
+			info->x0 = 0;
+			if (info->tab2d[info->x0][info->y0 + 1])
+			{
+				info->y0++;
+			}
+			else
+				end = 1;
+		}
 	}
 }
 
