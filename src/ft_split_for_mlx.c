@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/26 18:14:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:55:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void each_word(char *string, char ***ret)
         }
         if (string[x.i] == '\n')
         {
-	        printf("2) :ret[%d][%d]\n",x.k, x.j);
+	        //printf("2) :ret[%d][%d]\n",x.k, x.j);
             ret[x.k][x.j++] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             x.k = 0;
@@ -88,14 +88,14 @@ static void each_word(char *string, char ***ret)
         }
         if (string[x.i] == ' ')
         {
-	        printf("1) ret[%d][%d]\n",x.k, x.j);
+	        //printf("1) ret[%d][%d]\n",x.k, x.j);
             ret[x.k++][x.j] = (char*)ft_calloc(sizeof(char),each_word + 1);
             each_word = 0;
             while (string[x.i++] && string[x.i] == ' ');
         }
 	if (string[x.i] == '\0')
 	{
-		printf("daxa\n");
+		//printf("daxa\n");
 		break;
 	}
     }
@@ -116,7 +116,7 @@ static void implement(char *string, char ***ret)
 		    break;
         while (string[x.i] != ' ' && string[x.i] != '\n' && string[x.i])
 	    {
-	        printf("ret[%d][%d][%d] = %c\n",x.k, x.j, each_word, string[x.i]);
+	        //printf("ret[%d][%d][%d] = %c\n",x.k, x.j, each_word, string[x.i]);
             ret[x.k][x.j][each_word++] = string[x.i++]; 
 	    }
         if (string[x.i] == '\n')
