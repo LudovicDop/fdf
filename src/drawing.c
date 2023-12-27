@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/27 16:42:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2023/12/27 17:20:57 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void	put_pixel_on_map(t_info* info, char *path)
 	t_increase x;
 	char *tab;
 	char *tmp;
-
+	
+	tmp = ft_calloc(1, 1);
 	info->y0 = 30;
 	info->x0 = 500;
 	info->x1 = 1010;
