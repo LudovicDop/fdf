@@ -6,7 +6,7 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/27 23:50:48 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2023/12/27 23:58:51 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 			else
 				end = 1;
 		}
+		info->refresh = 0;
 	}
 }
 
