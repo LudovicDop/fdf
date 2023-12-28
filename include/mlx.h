@@ -5,6 +5,10 @@
 # include "../gnl/get_next_line.h"
 # include "MLX42/MLX42.h"
 # include <stdio.h>
+# include <math.h>
+# define ABS(_x) ((_x) >= 0 ? (_x) : -(_x))
+# define SGN(_x) ((_x) < 0 ? -1 : \
+						 ((_x) > 0 ? 1 : 0))
 
 typedef struct s_info
 {
