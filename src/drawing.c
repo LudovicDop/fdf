@@ -6,12 +6,12 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/28 22:49:07 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2023/12/28 23:00:36 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define SCALE 2
+#define SCALE 42
 
 int	open_file(char *path)
 {
@@ -154,7 +154,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 			{
 				printf("3Tab[%d][%d] = %s\n",info->x0 , info->y0,info->tab2d[info->x0][info->y0]);
 				printf("4Tab[%d][%d] = %s\n",info->x0, info->y0 + 1,info->tab2d[info->x0][info->y0 + 1]);
-				link_pxl(info, info->x0, info->y0, info->x0 * SCALE, (info->y0 + 1) * SCALE);
+				link_pxl(info, info->x0 * SCALE, info->y0, info->x0 * SCALE, (info->y0 + 1) * SCALE);
 			}
 			info->x0++;
 		}
@@ -177,7 +177,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 		}
 		info->refresh = 0;
 	}
-	//link_pxl(info,0,30,10,400);
+	//link_pxl(info,10,10,10,40);
 }
 
 
