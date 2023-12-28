@@ -6,12 +6,12 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/28 00:53:46 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2023/12/28 01:23:16 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define SCALE 42
+#define SCALE 1
 
 int	open_file(char *path)
 {
@@ -83,48 +83,6 @@ void	put_pixel_on_map(t_info* info, char *path)
 	}
 	info->tab2d = ft_split_for_mlx(tab);
 
-	// while (info->tab2d[x.i])
-	// {
-	// 	x.j = 0;
-	// 	while (info->tab2d[x.i][x.j])
-	// 	{
-	// 		printf("tab[%d][%d] = %s\n",x.i,x.j,info->tab2d[x.i][x.j]);
-	// 		x.j++;
-	// 	}
-	// 	x.i++;
-	// }
-
-	// while (info->tab2d[x.i])
-	// {
-	// 	x.j = 0;
-	// 	while (info->tab2d[x.i][x.j])
-	// 	{
-	// 		info->y0+=5;
-	// 		info->y1+=5;
-	// 		if ((uint32_t)info->x0 < info->img->width && (uint32_t)info->x1 < info->img->width && (uint32_t)info->y0 < info->img->height && (uint32_t)info->y1 < info->img->height)
-	// 			link_pxl(info, info->x0, info->y0, info->x1, info->y1);
-	// 		//printf("tab[%d][%d] = %s\n",x.i,x.j,info->tab2d[x.i][x.j]);
-	// 		x.j++;
-	// 	}
-	// 	x.i++;
-	// }
-	//x.i = 0;
-	//x.j = 0;
-	// x.k = 0;
-	// x.l = 0;
-	// while (info->tab2d[x.i][x.j])
-	// {
-	// 	while (info->tab2d[x.i + 1])
-	// 	{
-	// 		x.j+=5;
-	// 		printf("tab[%d][%d] = %s\n",x.i,x.j,info->tab2d[x.i][x.j]);
-	// 		link_pxl(info, x.i, x.j, x.i + 10, x.j + 10);
-	// 		x.i++;
-	// 	} 
-	// 	printf("\n");
-	// 	x.i = 0;s
-	// 	x.j++;
-	// }
 	info->x0 = 0;
 	info->y0 = 0;
 	int end;
@@ -154,7 +112,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 			{
 				printf("6tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
 				printf("5tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0 + 1]);
-				link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, info->x0 * SCALE, (info->y0 + 1)* SCALE);
+				link_pxl(info, info->x0 * SCALE, info->y0 * SCALE, info->x0 * SCALE, info->y0 * 1000);
 			}
 			info->x0 = 0;
 			if (info->tab2d[info->x0][info->y0 + 1])
