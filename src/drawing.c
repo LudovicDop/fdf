@@ -6,14 +6,14 @@
 /*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/29 20:07:28 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2023/12/29 22:28:11 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
 #define SCALE 3
-#define DEG_X -30
-#define DEG_Y 30
+#define DEG_X 30
+#define DEG_Y 0
 int	open_file(char *path)
 {
 	int	fd;
@@ -119,14 +119,14 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 
 void isometric_transform_and_draw_line(t_info* info, int x0, int y0, int z0, int x1, int y1, int z1) {
     // Transform the start and end points to isometric projection
-    int x0_iso = (x0 - z0) * cos(DEG_X * M_PI / 180);
-    int y0_iso = y0 + (x0 + z0) * sin(DEG_Y * M_PI / 180);
-    int x1_iso = (x1 - z1) * cos(DEG_X * M_PI / 180);
-    int y1_iso = y1 + (x1 + z1) * sin(DEG_Y * M_PI / 180);
+    int x0_iso = (x0 - (z0 * 2)) * cos(DEG_X * M_PI / 180);
+    int y0_iso = y0 + (x0 + (z0 * 2)) * sin(DEG_Y * M_PI / 180);
+    int x1_iso = (x1 - (z1 * 2)) * cos(DEG_X * M_PI / 180);
+    int y1_iso = y1 + (x1 + (z1 * 2)) * sin(DEG_Y * M_PI / 180);
 
     // Now draw the line using the isometric coordinates
-	if ((uint32_t)x0_iso + 300 < info->img->width && (uint32_t)y0_iso + 300< info->img->height && (uint32_t)x1_iso + 300 < info->img->width && (uint32_t)y1_iso + 300< info->img->height)
-    	link_pxl(info, x0_iso + 300, y0_iso + 300, x1_iso + 300, y1_iso + 300);
+	if ((uint32_t)x0_iso + (info->img->width / 2) < info->img->width && (uint32_t)y0_iso + (info->img->height / 13) < info->img->height && (uint32_t)x1_iso + (info->img->width / 2) < info->img->width && (uint32_t)y1_iso + (info->img->height / 13) < info->img->height)
+    	link_pxl(info, x0_iso + (info->img->width / 2), y0_iso + (info->img->height / 13), x1_iso + (info->img->width / 2), y1_iso + (info->img->height / 13));
 }
 
 void	put_pixel_on_map(t_info* info, char *path)
