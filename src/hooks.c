@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 21:59:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 22:27:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ void	ft_hook(void *param)
 	{
 		mlx_close_window(info->mlx);
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(info->mlx, MLX_KEY_Z))
 	{
-		printf("ok\n");
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 		if (!info->img)
@@ -36,7 +35,6 @@ void	ft_hook(void *param)
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_E))
 	{
-		printf("ok\n");
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 		if (!info->img)
@@ -49,7 +47,6 @@ void	ft_hook(void *param)
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_S))
 	{
-		printf("ok\n");
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 		if (!info->img)
@@ -62,7 +59,6 @@ void	ft_hook(void *param)
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
 	{
-		printf("ok\n");
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 		if (!info->img)
@@ -75,7 +71,6 @@ void	ft_hook(void *param)
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_X))
 	{
-		printf("ok\n");
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 		if (!info->img)
@@ -88,7 +83,6 @@ void	ft_hook(void *param)
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_C))
 	{
-		printf("ok\n");
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 		if (!info->img)

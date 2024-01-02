@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 22:05:59 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 22:40:40 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,9 @@ void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
 
 void start_put_pixel(t_info* info)
 {
-	int end;
+	int  end;
+	// char **z0;
+	// char **z1;
 
 	end = 0;
 	while (info->tab2d[info->x0] && end != 1)
@@ -166,17 +168,31 @@ void start_put_pixel(t_info* info)
 		if (info->tab2d[info->x0 + 1])
 		{
 			//printf("ret[%d][%d] = %d\n",info->x0,info->y0,ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
+			// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
+			// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
 			isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1) * SCALE, info->y0 * SCALE, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
+			// free_my_tab_2d(z0);
+			// free_my_tab_2d(z1);
 			if (info->tab2d[info->x0][info->y0 + 1])
 			{
+				// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
+				// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
 				isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
+				// free_my_tab_2d(z0);
+				// free_my_tab_2d(z1);
 			}
 			info->x0++;
 		}
 		else
 		{
 			if (info->tab2d[info->x0][info->y0 + 1])
+			{
+				// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
+				// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
 				isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
+				// free_my_tab_2d(z0);
+				// free_my_tab_2d(z1);
+			}
 			info->x0 = 0;
 			if (info->tab2d[info->x0][info->y0 + 1])
 				info->y0++;
