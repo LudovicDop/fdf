@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 18:49:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 21:17:44 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 		// 	i++;
 		// }
 
-	//start_put_pixel(info);
+	start_put_pixel(info);
 }
 
 
