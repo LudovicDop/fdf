@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 13:27:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 21:59:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void	ft_hook(void *param)
 
 	info = param;
 	if (mlx_is_key_down(info->mlx, MLX_KEY_ESCAPE))
+	{
 		mlx_close_window(info->mlx);
+	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_W))
 	{
 		printf("ok\n");

@@ -6,12 +6,12 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 21:28:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 22:04:13 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define SCALE 20
+#define SCALE 10
 
 int	open_file(char *path)
 {
@@ -152,6 +152,8 @@ void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
 		tab = ft_strjoin(tab, tmp);
 	}
 	info->tab2d = ft_split_for_mlx(tab);
+	free(tab);
+	free(tmp);
 }
 
 void start_put_pixel(t_info* info)
@@ -183,6 +185,7 @@ void start_put_pixel(t_info* info)
 		}
 		info->refresh = 0;
 	}
+	free_my_tab(info->tab2d);
 }
 void	put_pixel_on_map(t_info* info, char *path)
 {
@@ -204,6 +207,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 	info->y0 = 0;
 	parse_my_map(info, tab, tmp, fd);
 	start_put_pixel(info);
+	free(tmp);
 }
 
 
