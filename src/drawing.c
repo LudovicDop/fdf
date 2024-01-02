@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/29 22:28:11 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/01/02 13:38:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define SCALE 3
-#define DEG_X 30
-#define DEG_Y 0
+#define SCALE 20
+
 int	open_file(char *path)
 {
 	int	fd;
@@ -118,83 +117,87 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 }
 
 void isometric_transform_and_draw_line(t_info* info, int x0, int y0, int z0, int x1, int y1, int z1) {
+    // Rotation autour de l'axe Z
+    info->temp_x0 = x0 * cos(info->DEG_Z * M_PI / 180) - y0 * sin(info->DEG_Z * M_PI / 180);
+    info->temp_y0 = x0 * sin(info->DEG_Z * M_PI / 180) + y0 * cos(info->DEG_Z * M_PI / 180);
+    x0 = info->temp_x0;
+    y0 = info->temp_y0;
+
+    info->temp_x1 = x1 * cos(info->DEG_Z * M_PI / 180) - y1 * sin(info->DEG_Z * M_PI / 180);
+    info->temp_y1 = x1 * sin(info->DEG_Z * M_PI / 180) + y1 * cos(info->DEG_Z * M_PI / 180);
+    x1 = info->temp_x1;
+    y1 = info->temp_y1;
+
     // Transform the start and end points to isometric projection
-    int x0_iso = (x0 - (z0 * 2)) * cos(DEG_X * M_PI / 180);
-    int y0_iso = y0 + (x0 + (z0 * 2)) * sin(DEG_Y * M_PI / 180);
-    int x1_iso = (x1 - (z1 * 2)) * cos(DEG_X * M_PI / 180);
-    int y1_iso = y1 + (x1 + (z1 * 2)) * sin(DEG_Y * M_PI / 180);
+    int x0_iso = (x0 - z0) * cos(info->DEG_X * M_PI / 180) - (y0 - z0) * sin(info->DEG_X * M_PI / 180);
+    int y0_iso = (x0 + z0) * sin(info->DEG_Y * M_PI / 180) + (y0 + z0) * cos(info->DEG_Y * M_PI / 180);
+    int x1_iso = (x1 - z1) * cos(info->DEG_X * M_PI / 180) - (y1 - z1) * sin(info->DEG_X * M_PI / 180);
+    int y1_iso = (x1 + z1) * sin(info->DEG_Y * M_PI / 180) + (y1 + z1) * cos(info->DEG_Y * M_PI / 180);
 
     // Now draw the line using the isometric coordinates
-	if ((uint32_t)x0_iso + (info->img->width / 2) < info->img->width && (uint32_t)y0_iso + (info->img->height / 13) < info->img->height && (uint32_t)x1_iso + (info->img->width / 2) < info->img->width && (uint32_t)y1_iso + (info->img->height / 13) < info->img->height)
-    	link_pxl(info, x0_iso + (info->img->width / 2), y0_iso + (info->img->height / 13), x1_iso + (info->img->width / 2), y1_iso + (info->img->height / 13));
+    if ((uint32_t)x0_iso + (info->img->width / 2) < info->img->width && 
+        (uint32_t)y0_iso + (info->img->height / 2) < info->img->height && 
+        (uint32_t)x1_iso + (info->img->width / 2) < info->img->width && 
+        (uint32_t)y1_iso + (info->img->height / 2) < info->img->height) {
+            link_pxl(info, x0_iso + (info->img->width / 2), y0_iso + (info->img->height / 2), 
+                     x1_iso + (info->img->width / 2), y1_iso + (info->img->height / 2));
+    }
 }
 
-void	put_pixel_on_map(t_info* info, char *path)
+void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
 {
-	int		fd;
-	//t_increase x;
-	char *tab;
-	char *tmp;
-	
-	tmp = ft_calloc(1, 1);
-	info->y0 = 30;
-	info->x0 = 500;
-	info->x1 = 1010;
-	info->y1 = 30;
-	tab = ft_calloc(1, 1);
-	fd = open_file(path);
 	while (tmp)
 	{
 		tmp = get_next_line(fd);
 		tab = ft_strjoin(tab, tmp);
 	}
 	info->tab2d = ft_split_for_mlx(tab);
+}
 
-	info->x0 = 0;
-	info->y0 = 0;
+void start_put_pixel(t_info* info)
+{
 	int end;
-	
+
 	end = 0;
 	while (info->tab2d[info->x0] && end != 1)
 	{
 		if (info->tab2d[info->x0 + 1])
 		{
-			printf("\n");
-			printf("1Tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
-			printf("2Tab[%d][%d] = %s\n",info->x0 + 1, info->y0,info->tab2d[info->x0 + 1][info->y0]);
-			//if ((uint32_t)(info->x0 * SCALE) < info->img->width && (uint32_t)(info->y0 * SCALE) < info->img->height)
-				isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1) * SCALE, info->y0 * SCALE, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
-			printf("\n");
+			isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1) * SCALE, info->y0 * SCALE, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			if (info->tab2d[info->x0][info->y0 + 1])
-			{
-				printf("3Tab[%d][%d] = %s\n",info->x0 , info->y0,info->tab2d[info->x0][info->y0]);
-				printf("4Tab[%d][%d] = %s\n",info->x0, info->y0 + 1,info->tab2d[info->x0][info->y0 + 1]);
-				//if ((uint32_t)(info->x0 * SCALE) < info->img->width && (uint32_t)(info->y0 * SCALE) < info->img->height)
 					isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
-			}
 			info->x0++;
 		}
 		else
 		{
-			printf("\n");
 			if (info->tab2d[info->x0][info->y0 + 1])
-			{
-				printf("6tab[%d][%d] = %s\n",info->x0, info->y0,info->tab2d[info->x0][info->y0]);
-				printf("5tab[%d][%d] = %s\n",info->x0, info->y0 + 1,info->tab2d[info->x0][info->y0 + 1]);
-				//if ((uint32_t)(info->x0 * SCALE) < info->img->width && (uint32_t)(info->y0 * SCALE) < info->img->height)
-					isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
-			}
+				isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
 			info->x0 = 0;
 			if (info->tab2d[info->x0][info->y0 + 1])
-			{
 				info->y0++;
-			}
 			else
 				end = 1;
 		}
 		info->refresh = 0;
 	}
-	//link_pxl(info,10,10,10,40);
+}
+void	put_pixel_on_map(t_info* info, char *path)
+{
+	int		fd;
+	char *tab;
+	char *tmp;
+	
+	tmp = ft_calloc(1, 1);
+	if (!tmp)
+		return ;
+	tab = ft_calloc(1, 1);
+	if (!tab)
+		return ;
+	fd = open_file(path);
+	info->x0 = 0;
+	info->y0 = 0;
+	parse_my_map(info, tab, tmp, fd);
+	start_put_pixel(info);
 }
 
 

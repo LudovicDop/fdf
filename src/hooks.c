@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2023/12/27 14:12:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 13:27:06 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,84 @@ void	ft_hook(void *param)
 	info = param;
 	if (mlx_is_key_down(info->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(info->mlx);
+	if (mlx_is_key_down(info->mlx, MLX_KEY_W))
+	{
+		printf("ok\n");
+		mlx_delete_image(info->mlx, info->img);
+		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
+		if (!info->img)
+			error();
+		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
+			error();
+		resize_img(info->img, info->img->width, info->img->height);
+		put_pixel_on_map(info, info->path);
+		info->DEG_X++;
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_E))
+	{
+		printf("ok\n");
+		mlx_delete_image(info->mlx, info->img);
+		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
+		if (!info->img)
+			error();
+		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
+			error();
+		resize_img(info->img, info->img->width, info->img->height);
+		put_pixel_on_map(info, info->path);
+		info->DEG_X--;
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_S))
+	{
+		printf("ok\n");
+		mlx_delete_image(info->mlx, info->img);
+		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
+		if (!info->img)
+			error();
+		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
+			error();
+		resize_img(info->img, info->img->width, info->img->height);
+		put_pixel_on_map(info, info->path);
+		info->DEG_Z++;
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
+	{
+		printf("ok\n");
+		mlx_delete_image(info->mlx, info->img);
+		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
+		if (!info->img)
+			error();
+		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
+			error();
+		resize_img(info->img, info->img->width, info->img->height);
+		put_pixel_on_map(info, info->path);
+		info->DEG_Z--;
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_X))
+	{
+		printf("ok\n");
+		mlx_delete_image(info->mlx, info->img);
+		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
+		if (!info->img)
+			error();
+		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
+			error();
+		resize_img(info->img, info->img->width, info->img->height);
+		put_pixel_on_map(info, info->path);
+		info->DEG_Y++;
+	}
+	if (mlx_is_key_down(info->mlx, MLX_KEY_C))
+	{
+		printf("ok\n");
+		mlx_delete_image(info->mlx, info->img);
+		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
+		if (!info->img)
+			error();
+		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
+			error();
+		resize_img(info->img, info->img->width, info->img->height);
+		put_pixel_on_map(info, info->path);
+		info->DEG_Y--;
+	}
 	if (info->refresh == 1)
 	{
 		put_pixel_on_map(info, info->path);

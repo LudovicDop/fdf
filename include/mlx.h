@@ -23,6 +23,17 @@ typedef struct s_info
 	int			x1;
 	int			y1;
 	int			z1;
+	int			DEG_X;
+ 	int 		DEG_Y;
+	int 		DEG_Z;
+	int 		temp_x0;
+	int			x0_iso;
+	int			y0_iso;
+	int			x1_iso;
+	int			y1_iso;
+	int			temp_x1;
+	int			temp_y1;
+	int			temp_y0;
 }				t_info;
 
 typedef struct s_increase
@@ -44,4 +55,5 @@ void			destroy_loop_hook(t_info *info);
 void			put_pixel_on_map(t_info* info, char *path);
 int				open_file(char *path);
 char    		***ft_split_for_mlx(char *string);
+void    		free_my_tab(char ***tab);
 #endif
