@@ -6,12 +6,12 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 13:38:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 16:03:36 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define SCALE 20
+#define SCALE 5
 
 int	open_file(char *path)
 {
@@ -163,9 +163,14 @@ void start_put_pixel(t_info* info)
 	{
 		if (info->tab2d[info->x0 + 1])
 		{
+			//printf("ret[%d][%d] = %d\n",info->x0,info->y0,ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1) * SCALE, info->y0 * SCALE, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			if (info->tab2d[info->x0][info->y0 + 1])
+			{
+					printf("Z = %d\n",ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
 					isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
+
+			}
 			info->x0++;
 		}
 		else
@@ -196,8 +201,24 @@ void	put_pixel_on_map(t_info* info, char *path)
 	fd = open_file(path);
 	info->x0 = 0;
 	info->y0 = 0;
+	printf("ok");
 	parse_my_map(info, tab, tmp, fd);
-	start_put_pixel(info);
+	// int	i = 0;
+	// int j = 0;
+	//int x = 0;
+
+		// while(info->tab2d[i])
+		// {
+		// 	j = 0;
+		// 	while (info->tab2d[i][j])
+		// 	{
+		// 		printf("tab[%d][%d] = %s\n",i,j,info->tab2d[i][j]);
+		// 		j++;
+		// 	}
+		// 	i++;
+		// }
+
+	//start_put_pixel(info);
 }
 
 

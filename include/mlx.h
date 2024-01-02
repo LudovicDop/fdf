@@ -42,6 +42,8 @@ typedef struct s_increase
 	int j;
 	int	k;
 	int	l;
+	int x;
+	int y;
 }				t_increase;
 
 void			ft_hook(void *param);
