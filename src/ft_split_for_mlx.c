@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:03:56 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 18:42:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/02 18:49:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,63 @@ static void each_word(char *string, char ***ret)
         }
     }
 }
+static void implement(char *string, char ***ret)
+{
+    t_increase x;
+    int each_word;
+    int lock;
+
+    lock = 0;
+    each_word = 0;
+    x.x = 0;
+    x.y = 0;
+    x.i = 0;
+    printf("DEBUT\n");
+    while (string[x.i] && ret[x.x])
+    {
+        while (string[x.i] && string[x.i] != ' ' && string[x.i] != '\n')
+        {
+            printf("ret[%d][%d][%d] = %c\n",x.x, x.y, each_word,string[x.i]);
+            ret[x.x][x.y][each_word] = string[x.i];
+            lock = 1;
+            each_word++;
+            x.i++;
+        }
+        if (lock == 1)
+        {
+            //printf("ret[%d][%d] = %d\n",x.x, x.y, each_word);
+            //ret[x.x][x.y] = ft_calloc(sizeof(char), each_word + 1);
+            lock = 0;
+        }
+        if (string[x.i] == '\n' && string[x.i])
+        {
+            each_word = 0;
+            lock = 0;
+            x.x = 0;
+            x.y++;
+            if (string[x.i + 1] == ' ')
+            {
+                x.i++;
+                while (string[x.i] && string[x.i] == ' ')
+                {
+                    x.i++;
+                }
+            }
+            else
+                x.i++;
+        }
+        else if (string[x.i] == ' ' && string[x.i] )
+        {
+            x.x++;
+            lock = 0;
+            each_word = 0;
+            while (string[x.i] && string[x.i] == ' ')
+            {
+                x.i++;
+            }
+        }
+    }
+}
 // static void implement(char *string, char ***ret)
 // {
 //     t_increase x;
@@ -230,6 +287,6 @@ char    ***ft_split_for_mlx(char *string)
     ret = (char***)ft_calloc(sizeof(char**),first_dim + 1);
     second_dimension(string, ret, first_dim);
     each_word(string,ret);
-    //implement(string,ret);
+    implement(string,ret);
     return (NULL);
 }
