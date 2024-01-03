@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 16:35:56 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:39:46 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,9 +152,9 @@ void isometric_transform(int x, int y, int z, int *x_iso, int *y_iso, t_info* in
 // }
 
 void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot, t_info *info) {
-    float center_x = 9.5; // Define center x
-    float center_y = 5; // Define center y
-    float center_z = 5; // Define center z
+    float center_x = 99.5; // Define center x
+    float center_y = 57.5; // Define center y
+    float center_z = 0; // Define center z
 
     // Offset from center
     x -= center_x;
@@ -250,7 +250,7 @@ void start_put_pixel(t_info* info)
 			//printf("ret[%d][%d] = %d\n",info->x0,info->y0,ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
 			// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-			printf("z = %d z1 = %d\n",ft_atoi(info->tab2d[info->x0][info->y0]), ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
+			//printf("z = %d z1 = %d\n",ft_atoi(info->tab2d[info->x0][info->y0]), ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			isometric_transform_and_draw_line(info, info->x0, info->y0,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1), info->y0, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			// free_my_tab_2d(z0);
 			// free_my_tab_2d(z1);

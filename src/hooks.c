@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 16:13:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:41:14 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_hook(void *param)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
 		put_pixel_on_map(info, info->path);
-		info->rotation_angle_x+=1;
+		info->rotation_angle_x+=0.1;
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_E))
 	{
@@ -43,7 +43,7 @@ void	ft_hook(void *param)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
 		put_pixel_on_map(info, info->path);
-		info->rotation_angle_x-=1;
+		info->rotation_angle_x-=0.1;
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_S))
 	{
@@ -55,7 +55,7 @@ void	ft_hook(void *param)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
 		put_pixel_on_map(info, info->path);
-		info->rotation_angle_y+=1;
+		info->rotation_angle_y+=0.1;
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
 	{
@@ -67,7 +67,7 @@ void	ft_hook(void *param)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
 		put_pixel_on_map(info, info->path);
-		info->rotation_angle_y-=1;
+		info->rotation_angle_y-=0.1;
 	}
 	if (mlx_is_key_down(info->mlx, MLX_KEY_X))
 	{
