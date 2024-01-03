@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 16:39:46 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:09:38 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ void isometric_transform(int x, int y, int z, int *x_iso, int *y_iso, t_info* in
 // }
 
 void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot, t_info *info) {
-    float center_x = 99.5; // Define center x
-    float center_y = 57.5; // Define center y
+    float center_x = 9; // Define center x
+    float center_y = 5; // Define center y
     float center_z = 0; // Define center z
 
     // Offset from center
@@ -293,7 +293,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 	
 	 //info->DEG_X = 0;
 	 //info->DEG_Y = 0;
-	//info->scale = 2.0;
+	info->scale = 5.0;
 	// info->DEG_Y = 0;
 	//info->scale = 20;
 	//info->rotation_angle = 380;
