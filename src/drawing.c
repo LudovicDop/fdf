@@ -6,12 +6,11 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 22:40:40 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/03 16:35:56 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define SCALE 10
 
 int	open_file(char *path)
 {
@@ -116,32 +115,97 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 			}
 }
 
+
+
+void isometric_transform(int x, int y, int z, int *x_iso, int *y_iso, t_info* info) {
+    float radX = info->DEG_X * M_PI / 180;
+    float radY = info->DEG_Y * M_PI / 180;
+
+    *x_iso = (x - z) * cos(radX) * info->scale;
+    *y_iso = (y + (x + z) * sin(radY)) * info->scale;
+}
+
+
+// void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot, t_info *info) {
+//     int center_x = 0/* calculer ou définir le centre x */;
+//     int center_y = 0/* calculer ou définir le centre y */;
+//     int center_z = 0/* calculer ou définir le centre z */;
+
+//     // Décalage par rapport au centre
+//     x -= center_x;
+//     y -= center_y;
+//     z -= center_z;
+
+//     // Appliquer la rotation autour de l'axe X et Y
+//     int temp_x = x * cos(info->rotation_angle) - y * sin(info->rotation_angle);
+//     int temp_y = x * sin(info->rotation_angle) + y * cos(info->rotation_angle);
+
+//     // Appliquer la rotation autour de l'axe Z
+//     *x_rot = (temp_x * cos(info->z_rotation_angle) - z * sin(info->z_rotation_angle)) * info->scale;
+//     *z_rot = (temp_x * sin(info->z_rotation_angle) + z * cos(info->z_rotation_angle)) * info->scale;
+//     *y_rot = temp_y * info->scale;
+
+//     // Réajustement par rapport au centre
+//     *x_rot += center_x;
+//     *y_rot += center_y;
+//     *z_rot += center_z;
+// }
+
+void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot, t_info *info) {
+    float center_x = 9.5; // Define center x
+    float center_y = 5; // Define center y
+    float center_z = 5; // Define center z
+
+    // Offset from center
+    x -= center_x;
+    y -= center_y;
+    z -= center_z;
+
+    // Rotate around X axis
+    int temp_y = y * cos(info->rotation_angle_x) - z * sin(info->rotation_angle_x);
+    int temp_z = y * sin(info->rotation_angle_x) + z * cos(info->rotation_angle_x);
+    y = temp_y;
+    z = temp_z;
+
+    // Rotate around Y axis
+    int temp_x = x * cos(info->rotation_angle_y) + z * sin(info->rotation_angle_y);
+    temp_z = -x * sin(info->rotation_angle_y) + z * cos(info->rotation_angle_y);
+    x = temp_x;
+    z = temp_z;
+
+    // Rotate around Z axis and apply scale
+    temp_x = x * cos(info->rotation_angle_z) - y * sin(info->rotation_angle_z);
+    temp_y = x * sin(info->rotation_angle_z) + y * cos(info->rotation_angle_z);
+    x = temp_x * info->scale;
+    y = temp_y * info->scale;
+    z = temp_z * info->scale; // Apply scale to z if needed
+
+    // Readjust with respect to center
+    *x_rot = x + center_x;
+    *y_rot = y + center_y;
+    *z_rot = z + center_z;
+}
+
+
+
 void isometric_transform_and_draw_line(t_info* info, int x0, int y0, int z0, int x1, int y1, int z1) {
-    // Rotation autour de l'axe Z
-    info->temp_x0 = x0 * cos(info->DEG_Z * M_PI / 180) - y0 * sin(info->DEG_Z * M_PI / 180);
-    info->temp_y0 = x0 * sin(info->DEG_Z * M_PI / 180) + y0 * cos(info->DEG_Z * M_PI / 180);
-    x0 = info->temp_x0;
-    y0 = info->temp_y0;
+    int x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
+    int x0_iso, y0_iso, x1_iso, y1_iso;
 
-    info->temp_x1 = x1 * cos(info->DEG_Z * M_PI / 180) - y1 * sin(info->DEG_Z * M_PI / 180);
-    info->temp_y1 = x1 * sin(info->DEG_Z * M_PI / 180) + y1 * cos(info->DEG_Z * M_PI / 180);
-    x1 = info->temp_x1;
-    y1 = info->temp_y1;
+    // Appliquez la rotation autour du centre
+    rotate_about_center(x0, y0, z0, &x0_rot, &y0_rot, &z0_rot, info);
+    rotate_about_center(x1, y1, z1, &x1_rot, &y1_rot, &z1_rot, info);
 
-    // Transform the start and end points to isometric projection
-    int x0_iso = (x0 - z0) * cos(info->DEG_X * M_PI / 180) - (y0 - z0) * sin(info->DEG_X * M_PI / 180);
-    int y0_iso = (x0 + z0) * sin(info->DEG_Y * M_PI / 180) + (y0 + z0) * cos(info->DEG_Y * M_PI / 180);
-    int x1_iso = (x1 - z1) * cos(info->DEG_X * M_PI / 180) - (y1 - z1) * sin(info->DEG_X * M_PI / 180);
-    int y1_iso = (x1 + z1) * sin(info->DEG_Y * M_PI / 180) + (y1 + z1) * cos(info->DEG_Y * M_PI / 180);
+    // Appliquez la transformation isométrique aux points de départ et de fin
+    isometric_transform(x0_rot, y0_rot, z0_rot, &x0_iso, &y0_iso, info);
+    isometric_transform(x1_rot, y1_rot, z1_rot, &x1_iso, &y1_iso, info);
 
-    // Now draw the line using the isometric coordinates
-    if ((uint32_t)x0_iso + (info->img->width / 2) < info->img->width && 
-        (uint32_t)y0_iso + (info->img->height / 2) < info->img->height && 
-        (uint32_t)x1_iso + (info->img->width / 2) < info->img->width && 
-        (uint32_t)y1_iso + (info->img->height / 2) < info->img->height) {
-            link_pxl(info, x0_iso + (info->img->width / 2), y0_iso + (info->img->height / 2), 
-                     x1_iso + (info->img->width / 2), y1_iso + (info->img->height / 2));
-    }
+    // Dessinez maintenant la ligne en utilisant les coordonnées isométriques
+	if(x0_iso + info->img->width / 2 < info->img->width 
+	&& y0_iso  + info->img->height / 2 < info->img->height 
+	&& x1_iso  + info->img->width / 2 < info->img->width 
+	&& y1_iso  + info->img->height / 2 < info->img->height)
+    	link_pxl(info, x0_iso + info->img->width / 2, y0_iso  + info->img->height / 2, x1_iso + info->img->width / 2, y1_iso  + info->img->height / 2);
 }
 
 void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
@@ -152,6 +216,22 @@ void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
 		tab = ft_strjoin(tab, tmp);
 	}
 	info->tab2d = ft_split_for_mlx(tab);
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+
+	while (info->tab2d[i])
+	{
+		j = 0;
+		while(info->tab2d[i][j])
+		{
+			printf("tab[%d][%d] = %s\n",i,j,info->tab2d[i][j]);
+			j++;
+		}
+		i++;
+	}
 	free(tab);
 	free(tmp);
 }
@@ -170,14 +250,15 @@ void start_put_pixel(t_info* info)
 			//printf("ret[%d][%d] = %d\n",info->x0,info->y0,ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
 			// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-			isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1) * SCALE, info->y0 * SCALE, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
+			printf("z = %d z1 = %d\n",ft_atoi(info->tab2d[info->x0][info->y0]), ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
+			isometric_transform_and_draw_line(info, info->x0, info->y0,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1), info->y0, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
 			// free_my_tab_2d(z0);
 			// free_my_tab_2d(z1);
 			if (info->tab2d[info->x0][info->y0 + 1])
 			{
 				// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
 				// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-				isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
+				isometric_transform_and_draw_line(info, info->x0 , info->y0,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 , (info->y0 + 1) , ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
 				// free_my_tab_2d(z0);
 				// free_my_tab_2d(z1);
 			}
@@ -189,7 +270,7 @@ void start_put_pixel(t_info* info)
 			{
 				// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
 				// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-				isometric_transform_and_draw_line(info, info->x0 * SCALE, info->y0 * SCALE,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 * SCALE, (info->y0 + 1) * SCALE, ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
+				isometric_transform_and_draw_line(info, info->x0 , info->y0 ,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 , (info->y0 + 1) , ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
 				// free_my_tab_2d(z0);
 				// free_my_tab_2d(z1);
 			}
@@ -203,15 +284,19 @@ void start_put_pixel(t_info* info)
 	}
 	free_my_tab(info->tab2d);
 }
+
 void	put_pixel_on_map(t_info* info, char *path)
 {
 	int		fd;
 	char *tab;
 	char *tmp;
 	
-	info->DEG_X = 30;
-	info->DEG_Y = 30;
-	info->DEG_Y = 30;
+	 //info->DEG_X = 0;
+	 //info->DEG_Y = 0;
+	//info->scale = 2.0;
+	// info->DEG_Y = 0;
+	//info->scale = 20;
+	//info->rotation_angle = 380;
 	tmp = ft_calloc(1, 1);
 	if (!tmp)
 		return ;

@@ -23,9 +23,9 @@ typedef struct s_info
 	int			x1;
 	int			y1;
 	int			z1;
-	int			DEG_X;
- 	int 		DEG_Y;
-	int 		DEG_Z;
+	float			DEG_X;
+ 	float 		DEG_Y;
+	float 		DEG_Z;
 	int 		temp_x0;
 	int			x0_iso;
 	int			y0_iso;
@@ -34,6 +34,11 @@ typedef struct s_info
 	int			temp_x1;
 	int			temp_y1;
 	int			temp_y0;
+	float			scale;
+	float			rotation_angle_x;
+	float 		rotation_angle_y;
+	float			rotation_angle_z;
+	float			z_rotation_angle;
 }				t_info;
 
 typedef struct s_increase
