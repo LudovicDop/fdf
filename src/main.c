@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:18:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 22:21:57 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:55:38 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		info = ft_calloc(1, sizeof(t_info));
+		info->scale = 5.0;
+		info->rotation_angle_x = 0;
+		info->rotation_angle_y = 0;
+		info->rotation_angle_z = 0;
 		if (!info)
 			return (1);
 		info->path = ft_strdup(argv[1]);

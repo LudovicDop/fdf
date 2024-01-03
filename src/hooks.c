@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 17:03:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/03 17:49:43 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	ft_hook(void *param)
 		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
-		put_pixel_on_map(info, info->path);
 		info->rotation_angle_x+=0.1;
+		put_pixel_on_map(info, info->path);
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_S))
+	else if (mlx_is_key_down(info->mlx, MLX_KEY_S))
 	{
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
@@ -45,7 +45,7 @@ void	ft_hook(void *param)
 		put_pixel_on_map(info, info->path);
 		info->rotation_angle_x-=0.1;
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_D))
+	else if (mlx_is_key_down(info->mlx, MLX_KEY_D))
 	{
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
@@ -57,7 +57,7 @@ void	ft_hook(void *param)
 		put_pixel_on_map(info, info->path);
 		info->rotation_angle_y+=0.1;
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_A))
+	else if (mlx_is_key_down(info->mlx, MLX_KEY_A))
 	{
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
@@ -69,7 +69,7 @@ void	ft_hook(void *param)
 		put_pixel_on_map(info, info->path);
 		info->rotation_angle_y-=0.1;
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_X))
+	else if (mlx_is_key_down(info->mlx, MLX_KEY_X))
 	{
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
@@ -81,7 +81,7 @@ void	ft_hook(void *param)
 		put_pixel_on_map(info, info->path);
 		info->scale++;
 	}
-	if (mlx_is_key_down(info->mlx, MLX_KEY_C))
+	else if (mlx_is_key_down(info->mlx, MLX_KEY_C))
 	{
 		mlx_delete_image(info->mlx, info->img);
 		info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
