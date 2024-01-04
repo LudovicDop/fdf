@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/04 20:58:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/04 23:15:08 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ void	parse(t_info* info, t_info_map *info_map)
 	i = 0;
 	fd = open_file(info->path);
 	buffer = ft_calloc(1, 1);
-	//tmp = ft_split(get_next_line(fd), ' ');
+	// tmp = ft_split(get_next_line(fd), ' ');
 	// while (tmp[i])
 	// {
 	// 	printf("%s\n",tmp[i]);
@@ -302,13 +302,13 @@ void	parse(t_info* info, t_info_map *info_map)
 	while (buffer)
 	{
 		buffer = get_next_line(fd);
-		//printf("%s\n",buffer);
+		//printf("=>%s\n",buffer);
 		tmp = ft_split(buffer, ' ');
-		//printf("%s",buffer);
+		printf("%s",buffer);
 		i = 0;
 		while (tmp && buffer && tmp[i])
 		{
-			printf("tmp[%d] = %s\n",i,tmp[i]);
+			//printf("tmp[%d] = %s\n",i,tmp[i]);
 			info_map[j].z = ft_atoi(tmp[i]);
 			printf("info_map[%d].z = %d\n",j, info_map[j].z);
 			//printf("info_map[%d] = %d\n",j,info_map[j].z);
@@ -317,6 +317,7 @@ void	parse(t_info* info, t_info_map *info_map)
 		}
 		info_map[j].y+=1;
 	}
+	printf("Ok\n");
 }
 
 void size(t_info *info, int *x, int *y)
@@ -370,7 +371,7 @@ void	put_pixel_on_map(t_info* info)
 	y = -1;
 	size(info, &x, &y);
 	printf("x = %d && y = %d\n", x, y);
-	info_map = ft_calloc(x * y, sizeof(char) + 1);
+	info_map = ft_calloc(x * y, sizeof(char));
 	parse(info, info_map);
 	//start_put_pixel(info);
 	//free(tmp);
