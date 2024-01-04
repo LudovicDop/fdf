@@ -41,6 +41,12 @@ typedef struct s_info
 	float			z_rotation_angle;
 }				t_info;
 
+typedef struct s_info_map
+{
+	int	x;
+	int	y;
+	int z;
+}	t_info_map;
 typedef struct s_increase
 {
 	int	i;
@@ -59,7 +65,7 @@ int				init(t_info *info);
 void			init_loop_hook(t_info *info);
 void			error(void);
 void			destroy_loop_hook(t_info *info);
-void			put_pixel_on_map(t_info* info, char *path);
+void			put_pixel_on_map(t_info* info);
 int				open_file(char *path);
 char    		***ft_split_for_mlx(char *string);
 void    		free_my_tab(char ***tab);

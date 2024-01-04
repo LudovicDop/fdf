@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/04 12:49:37 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:01:00 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_hook(void *param)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
 		info->rotation_angle_x+=0.1;
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 	}
 	else if (mlx_is_key_down(info->mlx, MLX_KEY_S))
 	{
@@ -47,7 +47,7 @@ void	ft_hook(void *param)
 		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 		info->rotation_angle_x-=0.1;
 	}
 	else if (mlx_is_key_down(info->mlx, MLX_KEY_D))
@@ -59,7 +59,7 @@ void	ft_hook(void *param)
 		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 		info->rotation_angle_y+=0.1;
 	}
 	else if (mlx_is_key_down(info->mlx, MLX_KEY_A))
@@ -71,7 +71,7 @@ void	ft_hook(void *param)
 		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 		info->rotation_angle_y-=0.1;
 	}
 	else if (mlx_is_key_down(info->mlx, MLX_KEY_X))
@@ -83,7 +83,7 @@ void	ft_hook(void *param)
 		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 		info->scale++;
 	}
 	else if (mlx_is_key_down(info->mlx, MLX_KEY_C))
@@ -95,12 +95,12 @@ void	ft_hook(void *param)
 		if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 			error();
 		resize_img(info->img, info->img->width, info->img->height);
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 		info->scale--;
 	}
 	if (info->refresh == 1)
 	{
-		put_pixel_on_map(info, info->path);
+		//put_pixel_on_map(info, info->path);
 	}
 }
 

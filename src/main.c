@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:18:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 17:55:38 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/04 15:03:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 			return (free(info),1);
 		init(info);
 		init_loop_hook(info);
-		put_pixel_on_map(info, info->path);
+		put_pixel_on_map(info);
 		mlx_loop(info->mlx);
 		destroy_loop_hook(info);
 	}
