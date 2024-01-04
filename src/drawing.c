@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 17:55:24 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/04 13:05:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,18 +117,18 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 
 
 
-void isometric_transform(int x, int y, int z, int *x_iso, int *y_iso, t_info* info) {
+void isometric_transform(float x, float y, float z, float *x_iso, float *y_iso, t_info* info) {
     float radX = info->DEG_X * M_PI / 180;
     float radY = info->DEG_Y * M_PI / 180;
 
-    *x_iso = (x - z) * cos(radX) * info->scale;
-    *y_iso = (y + (x + z) * sin(radY)) * info->scale;
+    *x_iso = (x - z) * cosf(radX) * info->scale;
+    *y_iso = (y + (x + z) * sinf(radY)) * info->scale;
 }
 
-void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot, t_info *info) {
-    float center_x = 9.5; // Define center x
-    float center_y = 5; // Define center y
-    float center_z = 0; // Define center z
+void rotate_about_center(float x, float y, float z, float *x_rot, float *y_rot, float *z_rot, t_info *info) {
+    float center_x = 9.5f; // Define center x
+    float center_y = 5.0f; // Define center y
+    float center_z = 0.0f; // Define center z
 
     // Offset from center
     x -= center_x;
@@ -136,20 +136,20 @@ void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot
     z -= center_z;
 
     // Rotate around X axis
-    float temp_y = y * cos(info->rotation_angle_x) - z * sin(info->rotation_angle_x);
-    float temp_z = y * sin(info->rotation_angle_x) + z * cos(info->rotation_angle_x);
+    float temp_y = y * cosf(info->rotation_angle_x) - z * sinf(info->rotation_angle_x);
+    float temp_z = y * sinf(info->rotation_angle_x) + z * cosf(info->rotation_angle_x);
     y = temp_y;
     z = temp_z;
 
     // Rotate around Y axis
-    float temp_x = x * cos(info->rotation_angle_y) + z * sin(info->rotation_angle_y);
-    temp_z = -x * sin(info->rotation_angle_y) + z * cos(info->rotation_angle_y);
+    float temp_x = x * cosf(info->rotation_angle_y) + z * sinf(info->rotation_angle_y);
+    temp_z = -x * sinf(info->rotation_angle_y) + z * cosf(info->rotation_angle_y);
     x = temp_x;
     z = temp_z;
 
     // Rotate around Z axis and apply scale
-    temp_x = x * cos(info->rotation_angle_z) - y * sin(info->rotation_angle_z);
-    temp_y = x * sin(info->rotation_angle_z) + y * cos(info->rotation_angle_z);
+    temp_x = x * cosf(info->rotation_angle_z) - y * sinf(info->rotation_angle_z);
+    temp_y = x * sinf(info->rotation_angle_z) + y * cosf(info->rotation_angle_z);
     x = temp_x * info->scale;
     y = temp_y * info->scale;
     z = temp_z; // Apply scale to z if needed
@@ -160,17 +160,20 @@ void rotate_about_center(int x, int y, int z, int *x_rot, int *y_rot, int *z_rot
     *z_rot = z + center_z;
 }
 
-void isometric_transform_and_draw_line(t_info* info, int x0, int y0, int z0, int x1, int y1, int z1) {
-    int x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
-    int x0_iso, y0_iso, x1_iso, y1_iso;
+void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1) {
+    float x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
+    float x0_iso, y0_iso, x1_iso, y1_iso;
 
     // Appliquez la rotation autour du centre
     rotate_about_center(x0, y0, z0, &x0_rot, &y0_rot, &z0_rot, info);
     rotate_about_center(x1, y1, z1, &x1_rot, &y1_rot, &z1_rot, info);
-
+	// printf("x0 = %d && y0 = %d z0 = %d && x0_rot = %d y0_rot = %d z0_rot = %d\n",x0,y0,z0,x0_rot,y0_rot,z0_rot);
+	// printf("x1 = %d && y1 = %d z1 = %d && x1_rot = %d y1_rot = %d z1_rot = %d\n",x1,y1,z1,x1_rot,y1_rot,z1_rot);
     // Appliquez la transformation isométrique aux points de départ et de fin
     isometric_transform(x0_rot, y0_rot, z0_rot, &x0_iso, &y0_iso, info);
     isometric_transform(x1_rot, y1_rot, z1_rot, &x1_iso, &y1_iso, info);
+	// printf("ISO x0 = %d && y0 = %d z0 = %d && x0_rot = %d y0_rot = %d z0_rot = %d\n",x0,y0,z0,x0_rot,y0_rot,z0_rot);
+	// printf("ISO x1 = %d && y1 = %d z1 = %d && x1_rot = %d y1_rot = %d z1_rot = %d\n",x1,y1,z1,x1_rot,y1_rot,z1_rot);
 
     // Dessinez maintenant la ligne en utilisant les coordonnées isométriques
 	if(x0_iso + info->img->width / 2 < info->img->width 
@@ -199,7 +202,7 @@ void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
 		j = 0;
 		while(info->tab2d[i][j])
 		{
-			printf("tab[%d][%d] = %s\n",i,j,info->tab2d[i][j]);
+			//printf("tab[%d][%d] = %s\n",i,j,info->tab2d[i][j]);
 			j++;
 		}
 		i++;
@@ -272,6 +275,7 @@ void	put_pixel_on_map(t_info* info, char *path)
 	fd = open_file(path);
 	info->x0 = 0;
 	info->y0 = 0;
+	//info->scale = 2.0;
 	parse_my_map(info, tab, tmp, fd);
 	start_put_pixel(info);
 	free(tmp);

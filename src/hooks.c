@@ -6,11 +6,16 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/03 17:49:43 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/04 12:49:37 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
+
+void normalize_angle(float *angle) {
+    while (*angle >= 360.0f) *angle -= 360.0f;
+    while (*angle < 0.0f) *angle += 360.0f;
+}
 
 void	ft_hook(void *param)
 {
