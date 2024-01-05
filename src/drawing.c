@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/05 17:14:18 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/05 19:41:43 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ void isometric_transform(float x, float y, float z, float *x_iso, float *y_iso, 
 }
 
 void rotate_about_center(float x, float y, float z, float *x_rot, float *y_rot, float *z_rot, t_info *info) {
-    float center_x = 9.5f; // Define center x
-    float center_y = 5.0f; // Define center y
+    float center_x = info->width / 2; // Define center x
+    float center_y = info->height / 2; // Define center y
     float center_z = 0.0f; // Define center z
 
     // Offset from center
@@ -164,25 +164,28 @@ void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z
     float x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
     float x0_iso, y0_iso, x1_iso, y1_iso;
 
-	//printf("data = x0 = %f y = %f z = %f && x1 = %f y1 = %f z1 = %f\n",x0,y0,z0,x1,y1,z1);
-    // Appliquez la rotation autour du centre
+    // Apply rotation around the center
     rotate_about_center(x0, y0, z0, &x0_rot, &y0_rot, &z0_rot, info);
     rotate_about_center(x1, y1, z1, &x1_rot, &y1_rot, &z1_rot, info);
-	// printf("x0 = %d && y0 = %d z0 = %d && x0_rot = %d y0_rot = %d z0_rot = %d\n",x0,y0,z0,x0_rot,y0_rot,z0_rot);
-	// printf("x1 = %d && y1 = %d z1 = %d && x1_rot = %d y1_rot = %d z1_rot = %d\n",x1,y1,z1,x1_rot,y1_rot,z1_rot);
-    // Appliquez la transformation isométrique aux points de départ et de fin
+
+    // Apply isometric transformation to start and end points
     isometric_transform(x0_rot, y0_rot, z0_rot, &x0_iso, &y0_iso, info);
     isometric_transform(x1_rot, y1_rot, z1_rot, &x1_iso, &y1_iso, info);
-	// printf("ISO x0 = %d && y0 = %d z0 = %d && x0_rot = %d y0_rot = %d z0_rot = %d\n",x0,y0,z0,x0_rot,y0_rot,z0_rot);
-	// printf("ISO x1 = %d && y1 = %d z1 = %d && x1_rot = %d y1_rot = %d z1_rot = %d\n",x1,y1,z1,x1_rot,y1_rot,z1_rot);
 
-    // Dessinez maintenant la ligne en utilisant les coordonnées isométriques
-	if(x0_iso + info->img->width / 2 < info->img->width 
-	&& y0_iso  + info->img->height / 2 < info->img->height 
-	&& x1_iso  + info->img->width / 2 < info->img->width 
-	&& y1_iso  + info->img->height / 2 < info->img->height)
-    	link_pxl(info, x0_iso + info->img->width / 2, y0_iso  + info->img->height / 2, x1_iso + info->img->width / 2, y1_iso  + info->img->height / 2);
+    // Adjust for the center of the image
+    x0_iso += info->img->width / 2;
+    y0_iso += info->img->height / 2;
+    x1_iso += info->img->width / 2;
+    y1_iso += info->img->height / 2;
+
+    // Check if the coordinates are within the bounds of the image
+    if (x0_iso >= 0 && x0_iso < info->img->width && y0_iso >= 0 && y0_iso < info->img->height &&
+        x1_iso >= 0 && x1_iso < info->img->width && y1_iso >= 0 && y1_iso < info->img->height) {
+        // Draw the line using isometric coordinates
+        link_pxl(info, x0_iso, y0_iso, x1_iso, y1_iso);
+    }
 }
+
 
 // void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
 // {
@@ -308,9 +311,6 @@ void	parse(t_info* info, t_info_map *info_map, int size)
 			info_map[j].z = ft_atoi(tmp[i]);
 			info_map[j].x = i;
 			info_map[j].y = y;
-			// printf("ok\n");
-			//printf("info_map[%d].z = %d\n",j, info_map[j].z);
-			//printf("tmp = %s\n", tmp[i]);
 			i++;
 			j++;
 		}
@@ -361,24 +361,23 @@ void size(t_info *info, int *x, int *y)
 	free(tmp);
 }
 
-
 void	put_pixel_on_map(t_info* info)
 {
-	t_info_map *info_map;
-	int			x;
-	int			y;
+	// t_info_map *info_map;
+	// int			x;
+	// int			y;
 
-	x = 0;
-	y = -1;
-	size(info, &x, &y);
-	printf("x = %d && y = %d\n", x, y);
-	//info->points = ft_calloc
-	info_map = ft_calloc(x * y, sizeof(t_info_map));
-	parse(info, info_map, x * y);
-	info->height = y;
-	info->width = x;
+	// x = 0;
+	// y = -1;
+	// size(info, &x, &y);
+	// printf("x = %d && y = %d\n", x, y);
+	// //info->points = ft_calloc
+	// info_map = ft_calloc(x * y, sizeof(t_info_map));
+	//parse(info, info_map, x * y);
+	// info->height = y;
+	// info->width = x;
 	//printf("x = %d y = %d z = %d color = %s\n",info_map[INDEX].x,info_map[INDEX].y,info_map[INDEX].z,info_map[INDEX].color);
-	start_put_pixel(info, info_map);
+	start_put_pixel(info, info->info_map);
 	//free(info_map);
 }
 

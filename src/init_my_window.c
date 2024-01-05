@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_my_window.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:28:29 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/02 22:02:35 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/05 18:47:03 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 
 int	init(t_info *info)
 {
+	t_info_map *info_map;
+	int			x;
+	int			y;
+
+	x = 0;
+	y = -1;
+	size(info, &x, &y);
+	info->height = y;
+	info->width = x;
+	printf("x = %d && y = %d\n", x, y);
+	//info->points = ft_calloc
+	info_map = ft_calloc(x * y, sizeof(t_info_map));
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	info->mlx = mlx_init(WIDTH, HEIGHT, "42FDF", true);
 	if (!info->mlx)
@@ -23,6 +35,8 @@ int	init(t_info *info)
 		error();
 	if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
 		error();
+	parse(info, info_map, x * y);
+	info->info_map = info_map;
 	return (EXIT_SUCCESS);
 }
 

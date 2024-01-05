@@ -10,10 +10,20 @@
 # define SGN(_x) ((_x) < 0 ? -1 : \
 						 ((_x) > 0 ? 1 : 0))
 
+
+typedef struct s_info_map
+{
+	int	x;
+	int	y;
+	int z;
+	char* color;
+}	t_info_map;
+
 typedef struct s_info
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	t_info_map	*info_map;
 	int			refresh;
 	int			height;
 	int			width;
@@ -43,13 +53,6 @@ typedef struct s_info
 	float			z_rotation_angle;
 }				t_info;
 
-typedef struct s_info_map
-{
-	int	x;
-	int	y;
-	int z;
-	char* color;
-}	t_info_map;
 typedef struct s_increase
 {
 	int	i;
@@ -74,4 +77,6 @@ char    		***ft_split_for_mlx(char *string);
 void    		free_my_tab(char **tab);
 void 			free_my_tab_2d(char **tab);
 void start_put_pixel(t_info* info, t_info_map* info_map);
+void size(t_info *info, int *x, int *y);
+void	parse(t_info* info, t_info_map *info_map, int size);
 #endif
