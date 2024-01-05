@@ -73,4 +73,5 @@ int				open_file(char *path);
 char    		***ft_split_for_mlx(char *string);
 void    		free_my_tab(char **tab);
 void 			free_my_tab_2d(char **tab);
+void start_put_pixel(t_info* info, t_info_map* info_map);
 #endif

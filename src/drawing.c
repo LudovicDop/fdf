@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/05 16:44:30 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/05 17:14:18 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,7 @@ void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z
     float x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
     float x0_iso, y0_iso, x1_iso, y1_iso;
 
+	//printf("data = x0 = %f y = %f z = %f && x1 = %f y1 = %f z1 = %f\n",x0,y0,z0,x1,y1,z1);
     // Appliquez la rotation autour du centre
     rotate_about_center(x0, y0, z0, &x0_rot, &y0_rot, &z0_rot, info);
     rotate_about_center(x1, y1, z1, &x1_rot, &y1_rot, &z1_rot, info);
@@ -227,20 +228,15 @@ void start_put_pixel(t_info* info, t_info_map* info_map)
 		{
 			if (info_map[i].x < info->width - 1)
 			{
-				printf("1) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + 1].x,info_map[i].y);
-				//isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i].y, info_map[i + 1].z);
+				//printf("1) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + 1].x,info_map[i + 1].y);
+				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i + 1].y, info_map[i + 1].z);
 			}
 			if (info_map[i].y < info->height - 1)
 			{
-				printf("2) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + info->width].x,info_map[i + info->width].y);
-				//isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + info->width].x, info_map[i + info->width].y, info_map[i + info->width].z);
+				//printf("2) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + info->width].x,info_map[i + info->width].y);
+				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + info->width].x, info_map[i + info->width].y, info_map[i + info->width].z);
 			}
 			printf("\n");
-		}
-		else
-		{
-			//printf("3) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i].x + 1,info_map[i].y + 1);
-			//isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i + 1].y, info_map[i + 1].z);
 		}
 		i++;
 	}
@@ -364,6 +360,7 @@ void size(t_info *info, int *x, int *y)
 	close(fd);
 	free(tmp);
 }
+
 
 void	put_pixel_on_map(t_info* info)
 {

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:19:08 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/04 15:01:00 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/05 17:18:16 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	ft_hook(void *param)
 	}
 	if (info->refresh == 1)
 	{
-		//put_pixel_on_map(info, info->path);
+		put_pixel_on_map(info);
 	}
 }
 
