@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/05 12:27:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/05 14:03:02 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-
+#define INDEX 2
 int	open_file(char *path)
 {
 	int	fd;
@@ -282,49 +282,59 @@ int	ft_strlen_int(int number)
 	return (i);
 }
 
-void free_my_tab(char **tab)
-{
-	int	i;
-	int j;
+// void free_my_tab(char **tab)
+// {
+// 	int	i;
+// 	int j;
 
-	j = 0;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+// 	j = 0;
+// 	i = 0;
+// 	while (tab[i])
+// 	{
+// 		free(tab[i]);
+// 		i++;
+// 	}
+// 	free(tab);
 
-}
-void	parse(t_info* info, t_info_map *info_map)
+// }
+void	parse(t_info* info, t_info_map *info_map, int size)
 {
 	int	fd;
 	int i;
 	int j;
+	int y;
 	char	**tmp;
 	char *buffer;
 
 	j = 0;
 	i = 0;
+	y = 0;
 	fd = open_file(info->path);
-	buffer = ft_calloc(1, 1);
-
+	//buffer = ft_calloc(1, 1);
+	buffer = get_next_line(fd);
+	info_map[0].x = 0;
+	info_map[0].y = 0;
 	while (buffer)
 	{
-		buffer = get_next_line(fd);
+		//printf("%s\n",buffer);
 		tmp = ft_split(buffer, ' ');
+		if (!tmp)
+			return (free(buffer));
 		i = 0;
-		while (buffer && tmp[i])
+		info_map[j].x = -1;
+		while (tmp[i] && j < size)
 		{
 			info_map[j].z = ft_atoi(tmp[i]);
-			info_map[j].x+=1;
+			info_map[j].x = i;
+			info_map[j].y = y;
+			// printf("ok\n");
 			//printf("info_map[%d].z = %d\n",j, info_map[j].z);
 			//printf("tmp = %s\n", tmp[i]);
 			i++;
 			j++;
 		}
-		info_map[j].y+=1;
+		y++;
+		buffer = get_next_line(fd);
 	}
 }
 
@@ -369,6 +379,7 @@ void size(t_info *info, int *x, int *y)
 	close(fd);
 	free(tmp);
 }
+
 void	put_pixel_on_map(t_info* info)
 {
 	t_info_map *info_map;
@@ -379,8 +390,10 @@ void	put_pixel_on_map(t_info* info)
 	y = -1;
 	size(info, &x, &y);
 	printf("x = %d && y = %d\n", x, y);
-	info_map = ft_calloc((x * y) + 1, sizeof(char));
-	parse(info, info_map);
+	//info->points = ft_calloc
+	info_map = ft_calloc(x * y, sizeof(t_info_map));
+	parse(info, info_map, x * y);
+	printf("x = %d y = %d z = %d\n",info_map[INDEX].x,info_map[INDEX].y,info_map[INDEX].z);
 	//start_put_pixel(info);
 	//free(info_map);
 }

@@ -1,6 +1,6 @@
 MAKEFLAGS += --silent
-#CC = gcc -fsanitize=address -Wall -Werror -Wextra -g
-CC = gcc -g 
+CC = gcc -fsanitize=address -Wall -Werror -Wextra 
+#CC = gcc -g
 NAME = mlx.a
 all : $(NAME)
 
