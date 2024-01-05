@@ -15,6 +15,8 @@ typedef struct s_info
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	int			refresh;
+	int			height;
+	int			width;
 	char		*path;
 	char		***tab2d;
 	int			x0;
@@ -46,6 +48,7 @@ typedef struct s_info_map
 	int	x;
 	int	y;
 	int z;
+	char* color;
 }	t_info_map;
 typedef struct s_increase
 {

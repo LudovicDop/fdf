@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/05 14:03:02 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/01/05 16:44:30 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/mlx.h"
-#define INDEX 2
+#define INDEX 0
 int	open_file(char *path)
 {
 	int	fd;
@@ -213,54 +213,38 @@ void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z
 // 	free(tmp);
 // }
 
-// void start_put_pixel(t_info* info)
-// {
-// 	int  end;
-// 	// char **z0;
-// 	// char **z1;
+//isometric_transform_and_draw_line
+void start_put_pixel(t_info* info, t_info_map* info_map)
+{
+	int i;
+	int node;
 
-// 	end = 0;
-// 	while (info->tab2d[info->x0] && end != 1)
-// 	{
-// 		if (info->tab2d[info->x0 + 1])
-// 		{
-// 			//printf("ret[%d][%d] = %d\n",info->x0,info->y0,ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
-// 			// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
-// 			// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-// 			//printf("z = %d z1 = %d\n",ft_atoi(info->tab2d[info->x0][info->y0]), ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
-// 			isometric_transform_and_draw_line(info, info->x0, info->y0,ft_atoi(info->tab2d[info->x0][info->y0]), (info->x0 + 1), info->y0, ft_atoi(info->tab2d[info->x0 + 1][info->y0]));
-// 			// free_my_tab_2d(z0);
-// 			// free_my_tab_2d(z1);
-// 			if (info->tab2d[info->x0][info->y0 + 1])
-// 			{
-// 				// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
-// 				// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-// 				isometric_transform_and_draw_line(info, info->x0 , info->y0,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 , (info->y0 + 1) , ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
-// 				// free_my_tab_2d(z0);
-// 				// free_my_tab_2d(z1);
-// 			}
-// 			info->x0++;
-// 		}
-// 		else
-// 		{
-// 			if (info->tab2d[info->x0][info->y0 + 1])
-// 			{
-// 				// z0 = ft_split(info->tab2d[info->x0][info->y0],',');
-// 				// z1 = ft_split(info->tab2d[info->x0 + 1][info->y0],',');
-// 				isometric_transform_and_draw_line(info, info->x0 , info->y0 ,ft_atoi(info->tab2d[info->x0][info->y0]), info->x0 , (info->y0 + 1) , ft_atoi(info->tab2d[info->x0][info->y0 + 1]));
-// 				// free_my_tab_2d(z0);
-// 				// free_my_tab_2d(z1);
-// 			}
-// 			info->x0 = 0;
-// 			if (info->tab2d[info->x0][info->y0 + 1])
-// 				info->y0++;
-// 			else
-// 				end = 1;
-// 		}
-// 		info->refresh = 0;
-// 	}
-// 	free_my_tab(info->tab2d);
-// }
+	node = info->width * info->height;
+	i = 0;
+	while (i < node)
+	{ 
+		if (info_map[i].x < info->width && i < node - 1) 
+		{
+			if (info_map[i].x < info->width - 1)
+			{
+				printf("1) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + 1].x,info_map[i].y);
+				//isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i].y, info_map[i + 1].z);
+			}
+			if (info_map[i].y < info->height - 1)
+			{
+				printf("2) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + info->width].x,info_map[i + info->width].y);
+				//isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + info->width].x, info_map[i + info->width].y, info_map[i + info->width].z);
+			}
+			printf("\n");
+		}
+		else
+		{
+			//printf("3) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i].x + 1,info_map[i].y + 1);
+			//isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i + 1].y, info_map[i + 1].z);
+		}
+		i++;
+	}
+}
 
 int	ft_strlen_int(int number)
 {
@@ -324,6 +308,7 @@ void	parse(t_info* info, t_info_map *info_map, int size)
 		info_map[j].x = -1;
 		while (tmp[i] && j < size)
 		{
+			info_map[j].color = ft_strchr(tmp[i], ',');
 			info_map[j].z = ft_atoi(tmp[i]);
 			info_map[j].x = i;
 			info_map[j].y = y;
@@ -393,8 +378,10 @@ void	put_pixel_on_map(t_info* info)
 	//info->points = ft_calloc
 	info_map = ft_calloc(x * y, sizeof(t_info_map));
 	parse(info, info_map, x * y);
-	printf("x = %d y = %d z = %d\n",info_map[INDEX].x,info_map[INDEX].y,info_map[INDEX].z);
-	//start_put_pixel(info);
+	info->height = y;
+	info->width = x;
+	//printf("x = %d y = %d z = %d color = %s\n",info_map[INDEX].x,info_map[INDEX].y,info_map[INDEX].z,info_map[INDEX].color);
+	start_put_pixel(info, info_map);
 	//free(info_map);
 }
 
