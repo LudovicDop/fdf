@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/05 19:41:43 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/01/08 14:34:11 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*remove_space(char *string)
 	return (free(string), ret);
 }
 
-void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
+void link_pxl(t_info* info, int x0, int y0, int x1, int y1, unsigned int color)
 {
 			int dx = x1 - x0;
 			int dy = y1 - y0;
@@ -65,13 +65,13 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 			{
 				// horizontal line
 				for (int x = x0; x != x1 + incX; x += incX)
-					mlx_put_pixel(info->img, x,y0, 0xFFFFFFFF);
+					mlx_put_pixel(info->img, x,y0, color);
 			}
 			else if (dx == 0)
 			{
 				// vertical line
 				for (int y = y0; y != y1 + incY; y += incY)
-					mlx_put_pixel(info->img, x0,y, 0xFFFFFFFF);
+					mlx_put_pixel(info->img, x0,y, color);
 			}
 			else if (dx >= dy)
 			{
@@ -83,7 +83,7 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 
 				for (int x = x0; x != x1 + incX; x += incX)
 				{
-					mlx_put_pixel(info->img, x,y, 0xFFFFFFFF);
+					mlx_put_pixel(info->img, x,y, color);
 					error += slope;
 
 					if (error >= 0)
@@ -103,7 +103,7 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 
 				for (int y = y0; y != y1 + incY; y += incY)
 				{
-					mlx_put_pixel(info->img, x,y, 0xFFFFFFFF);
+					mlx_put_pixel(info->img, x,y, color);
 					error += slope;
 
 					if (error >= 0)
@@ -116,7 +116,7 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1)
 }
 
 
-
+//0xFFFFFFFF
 void isometric_transform(float x, float y, float z, float *x_iso, float *y_iso, t_info* info) {
     float radX = info->DEG_X * M_PI / 180;
     float radY = info->DEG_Y * M_PI / 180;
@@ -160,10 +160,12 @@ void rotate_about_center(float x, float y, float z, float *x_rot, float *y_rot, 
     *z_rot = z + center_z;
 }
 
-void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1) {
+void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1, unsigned int color) {
     float x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
     float x0_iso, y0_iso, x1_iso, y1_iso;
 
+	if (!color)
+		color = 0xFFFFFFFF;
     // Apply rotation around the center
     rotate_about_center(x0, y0, z0, &x0_rot, &y0_rot, &z0_rot, info);
     rotate_about_center(x1, y1, z1, &x1_rot, &y1_rot, &z1_rot, info);
@@ -182,7 +184,7 @@ void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z
     if (x0_iso >= 0 && x0_iso < info->img->width && y0_iso >= 0 && y0_iso < info->img->height &&
         x1_iso >= 0 && x1_iso < info->img->width && y1_iso >= 0 && y1_iso < info->img->height) {
         // Draw the line using isometric coordinates
-        link_pxl(info, x0_iso, y0_iso, x1_iso, y1_iso);
+        link_pxl(info, x0_iso, y0_iso, x1_iso, y1_iso, color);
     }
 }
 
@@ -232,12 +234,12 @@ void start_put_pixel(t_info* info, t_info_map* info_map)
 			if (info_map[i].x < info->width - 1)
 			{
 				//printf("1) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + 1].x,info_map[i + 1].y);
-				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i + 1].y, info_map[i + 1].z);
+				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i + 1].y, info_map[i + 1].z, info_map[i + 1].color);
 			}
 			if (info_map[i].y < info->height - 1)
 			{
 				//printf("2) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + info->width].x,info_map[i + info->width].y);
-				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + info->width].x, info_map[i + info->width].y, info_map[i + info->width].z);
+				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + info->width].x, info_map[i + info->width].y, info_map[i + info->width].z, info_map[i + info->width].color);
 			}
 			printf("\n");
 		}
@@ -280,6 +282,30 @@ int	ft_strlen_int(int number)
 // 	free(tab);
 
 // }
+
+unsigned int hex_to_uint(const char *hex) {
+    unsigned int result = 0;
+
+	if (!hex)
+		return (0);
+    while (*hex) {
+        result *= 16;
+        if (*hex >= '0' && *hex <= '9') {
+            result += *hex - '0';
+        } else if (*hex >= 'a' && *hex <= 'f') {
+            result += *hex - 'a' + 10;
+        } else if (*hex >= 'A' && *hex <= 'F') {
+            result += *hex - 'A' + 10;
+        }
+        ++hex;
+    }
+
+    // Ajout de FF à la fin
+    result = (result << 8) | 0xFF;
+    
+    return result;
+}
+
 void	parse(t_info* info, t_info_map *info_map, int size)
 {
 	int	fd;
@@ -307,7 +333,8 @@ void	parse(t_info* info, t_info_map *info_map, int size)
 		info_map[j].x = -1;
 		while (tmp[i] && j < size)
 		{
-			info_map[j].color = ft_strchr(tmp[i], ',');
+			info_map[j].color = hex_to_uint(ft_strchr(tmp[i], ','));
+			//info_map[j].color = 0xFFFFFFFF;
 			info_map[j].z = ft_atoi(tmp[i]);
 			info_map[j].x = i;
 			info_map[j].y = y;

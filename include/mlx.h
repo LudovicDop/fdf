@@ -16,7 +16,7 @@ typedef struct s_info_map
 	int	x;
 	int	y;
 	int z;
-	char* color;
+	unsigned int color;
 }	t_info_map;
 
 typedef struct s_info
