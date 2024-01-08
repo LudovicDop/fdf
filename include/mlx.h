@@ -63,6 +63,25 @@ typedef struct s_increase
 	int y;
 }				t_increase;
 
+typedef struct s_rot
+{
+	float x0_rot;
+	float y0_rot;
+	float z0_rot;
+	float x1_rot;
+	float y1_rot;
+	float z1_rot;
+}	t_rot;
+
+typedef struct s_iso
+{
+	float x0_iso;
+	float y0_iso;
+	float x1_iso; 
+	float y1_iso;
+}	t_iso;
+
+
 void			ft_hook(void *param);
 void			resize_img(mlx_image_t *img, unsigned int width,
 					unsigned int height);

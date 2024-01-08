@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/08 14:34:11 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/08 16:39:55 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,6 @@ int	open_file(char *path)
 	return (fd);
 }
 
-char	*remove_space(char *string)
-{
-	int		i;
-	int		k;
-	char	*ret;
-
-	k = 0;
-	i = 0;
-	while (string[i])
-	{
-		if (string[i] != ' ')
-			k++;
-		i++;
-	}
-	ret = malloc(sizeof(char) * k + 1);
-	i = 0;
-	k = 0;
-	while (string[i])
-	{
-		if (string[i] != ' ')
-		{
-			ret[k] = string[i];
-			k++;
-		}
-		i++;
-	}
-	ret[k] = '\0';
-	return (free(string), ret);
-}
-
 void link_pxl(t_info* info, int x0, int y0, int x1, int y1, unsigned int color)
 {
 			int dx = x1 - x0;
@@ -60,7 +30,7 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1, unsigned int color)
 			int incY = SGN(dy);
 			dx = ABS(dx);
 			dy = ABS(dy);
-
+	
 			if (dy == 0)
 			{
 				// horizontal line
@@ -130,96 +100,56 @@ void rotate_about_center(float x, float y, float z, float *x_rot, float *y_rot, 
     float center_y = info->height / 2; // Define center y
     float center_z = 0.0f; // Define center z
 
-    // Offset from center
     x -= center_x;
     y -= center_y;
     z -= center_z;
-
-    // Rotate around X axis
     float temp_y = y * cosf(info->rotation_angle_x) - z * sinf(info->rotation_angle_x);
     float temp_z = y * sinf(info->rotation_angle_x) + z * cosf(info->rotation_angle_x);
     y = temp_y;
     z = temp_z;
-
-    // Rotate around Y axis
     float temp_x = x * cosf(info->rotation_angle_y) + z * sinf(info->rotation_angle_y);
     temp_z = -x * sinf(info->rotation_angle_y) + z * cosf(info->rotation_angle_y);
     x = temp_x;
     z = temp_z;
-
-    // Rotate around Z axis and apply scale
     temp_x = x * cosf(info->rotation_angle_z) - y * sinf(info->rotation_angle_z);
     temp_y = x * sinf(info->rotation_angle_z) + y * cosf(info->rotation_angle_z);
     x = temp_x * info->scale;
     y = temp_y * info->scale;
-    z = temp_z; // Apply scale to z if needed
-
-    // Readjust with respect to center
+    z = temp_z;
     *x_rot = x + center_x;
     *y_rot = y + center_y;
     *z_rot = z + center_z;
 }
 
-void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1, unsigned int color) {
-    float x0_rot, y0_rot, z0_rot, x1_rot, y1_rot, z1_rot;
-    float x0_iso, y0_iso, x1_iso, y1_iso;
+//void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1, unsigned int color) {
+void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_info_map* info_map2) {
+    t_rot	rot;
+	t_iso	iso;
 
-	if (!color)
-		color = 0xFFFFFFFF;
+	if (!info_map->color)
+		info_map->color = 0xFFFFFFFF;
     // Apply rotation around the center
-    rotate_about_center(x0, y0, z0, &x0_rot, &y0_rot, &z0_rot, info);
-    rotate_about_center(x1, y1, z1, &x1_rot, &y1_rot, &z1_rot, info);
+    rotate_about_center(info_map->x, info_map->y, info_map->z, &rot.x0_rot, &rot.y0_rot, &rot.z0_rot, info);
+    rotate_about_center(info_map2->x, info_map2->y, info_map2->z, &rot.x1_rot, &rot.y1_rot, &rot.z1_rot, info);
 
     // Apply isometric transformation to start and end points
-    isometric_transform(x0_rot, y0_rot, z0_rot, &x0_iso, &y0_iso, info);
-    isometric_transform(x1_rot, y1_rot, z1_rot, &x1_iso, &y1_iso, info);
+    isometric_transform(rot.x0_rot, rot.y0_rot, rot.z0_rot, &iso.x0_iso, &iso.y0_iso, info);
+    isometric_transform(rot.x1_rot, rot.y1_rot, rot.z1_rot, &iso.x1_iso, &iso.y1_iso, info);
 
     // Adjust for the center of the image
-    x0_iso += info->img->width / 2;
-    y0_iso += info->img->height / 2;
-    x1_iso += info->img->width / 2;
-    y1_iso += info->img->height / 2;
+    iso.x0_iso += info->img->width / 2;
+    iso.y0_iso += info->img->height / 2;
+    iso.x1_iso += info->img->width / 2;
+    iso.y1_iso += info->img->height / 2;
 
     // Check if the coordinates are within the bounds of the image
-    if (x0_iso >= 0 && x0_iso < info->img->width && y0_iso >= 0 && y0_iso < info->img->height &&
-        x1_iso >= 0 && x1_iso < info->img->width && y1_iso >= 0 && y1_iso < info->img->height) {
+    if (iso.x0_iso >= 0 && iso.x0_iso < info->img->width && iso.y0_iso >= 0 && iso.y0_iso < info->img->height &&
+        iso.x1_iso >= 0 && iso.x1_iso < info->img->width && iso.y1_iso >= 0 && iso.y1_iso < info->img->height) {
         // Draw the line using isometric coordinates
-        link_pxl(info, x0_iso, y0_iso, x1_iso, y1_iso, color);
+        link_pxl(info, iso.x0_iso, iso.y0_iso, iso.x1_iso, iso.y1_iso, info_map->color);
     }
 }
 
-
-// void	parse_my_map(t_info *info, char *tab, char *tmp, int fd)
-// {
-// 	while (tmp)
-// 	{
-// 		tmp = get_next_line(fd);
-// 		tab = ft_strjoin(tab, tmp);
-// 	}
-
-// 	info->tab2d
-	// info->tab2d = ft_split_for_mlx(tab);
-	// int i;
-	// int j;
-
-	// i = 0;
-	// j = 0;
-
-	// while (info->tab2d[i])
-	// {
-	// 	j = 0;
-	// 	while(info->tab2d[i][j])
-	// 	{
-	// 		//printf("tab[%d][%d] = %s\n",i,j,info->tab2d[i][j]);
-	// 		j++;
-	// 	}
-	// 	i++;
-	// }
-// 	free(tab);
-// 	free(tmp);
-// }
-
-//isometric_transform_and_draw_line
 void start_put_pixel(t_info* info, t_info_map* info_map)
 {
 	int i;
@@ -232,16 +162,9 @@ void start_put_pixel(t_info* info, t_info_map* info_map)
 		if (info_map[i].x < info->width && i < node - 1) 
 		{
 			if (info_map[i].x < info->width - 1)
-			{
-				//printf("1) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + 1].x,info_map[i + 1].y);
-				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + 1].x, info_map[i + 1].y, info_map[i + 1].z, info_map[i + 1].color);
-			}
+								isometric_transform_and_draw_line(info, &info_map[i], &info_map[i + 1]);
 			if (info_map[i].y < info->height - 1)
-			{
-				//printf("2) info[%d][%d] && info[%d][%d]\n",info_map[i].x,info_map[i].y,info_map[i + info->width].x,info_map[i + info->width].y);
-				isometric_transform_and_draw_line(info, info_map[i].x, info_map[i].y, info_map[i].z, info_map[i + info->width].x, info_map[i + info->width].y, info_map[i + info->width].z, info_map[i + info->width].color);
-			}
-			printf("\n");
+								isometric_transform_and_draw_line(info, &info_map[i], &info_map[i + info->width]);
 		}
 		i++;
 	}
@@ -267,22 +190,6 @@ int	ft_strlen_int(int number)
 	return (i);
 }
 
-// void free_my_tab(char **tab)
-// {
-// 	int	i;
-// 	int j;
-
-// 	j = 0;
-// 	i = 0;
-// 	while (tab[i])
-// 	{
-// 		free(tab[i]);
-// 		i++;
-// 	}
-// 	free(tab);
-
-// }
-
 unsigned int hex_to_uint(const char *hex) {
     unsigned int result = 0;
 
@@ -306,47 +213,52 @@ unsigned int hex_to_uint(const char *hex) {
     return result;
 }
 
-void	parse(t_info* info, t_info_map *info_map, int size)
+void	parse2(char *buffer, t_info_map* info_map, int fd, int size)
 {
-	int	fd;
-	int i;
-	int j;
-	int y;
+	t_increase x;
 	char	**tmp;
-	char *buffer;
 
-	j = 0;
-	i = 0;
-	y = 0;
-	fd = open_file(info->path);
-	//buffer = ft_calloc(1, 1);
-	buffer = get_next_line(fd);
-	info_map[0].x = 0;
-	info_map[0].y = 0;
+	x.i = 0;
+	x.x = 0;
+	x.y = 0;
 	while (buffer)
 	{
-		//printf("%s\n",buffer);
 		tmp = ft_split(buffer, ' ');
 		if (!tmp)
 			return (free(buffer));
-		i = 0;
-		info_map[j].x = -1;
-		while (tmp[i] && j < size)
+		x.x = 0;
+		info_map[x.i].x = -1;
+		while (tmp[x.x] && x.i < size)
 		{
-			info_map[j].color = hex_to_uint(ft_strchr(tmp[i], ','));
-			//info_map[j].color = 0xFFFFFFFF;
-			info_map[j].z = ft_atoi(tmp[i]);
-			info_map[j].x = i;
-			info_map[j].y = y;
-			i++;
-			j++;
+			info_map[x.i].color = hex_to_uint(ft_strchr(tmp[x.x], ','));
+			info_map[x.i].z = ft_atoi(tmp[x.x]);
+			info_map[x.i].x = x.x;
+			info_map[x.i].y = x.y;
+			x.x++;
+			x.i++;
 		}
-		y++;
+		x.y++;
 		buffer = get_next_line(fd);
 	}
 }
+void	parse(t_info* info, t_info_map *info_map, int size)
+{
+	int	fd;
+	char *buffer;
 
-void size(t_info *info, int *x, int *y)
+	fd = open_file(info->path);
+	buffer = get_next_line(fd);
+	info_map[0].x = 0;
+	info_map[0].y = 0;
+	parse2(buffer, info_map, fd, size);
+}
+
+void	end(char *tmp, int fd)
+{
+	while (tmp)
+		tmp = get_next_line(fd);
+}
+void size2(t_info *info, int *x)
 {
 	int		fd;
 	int		i;
@@ -354,17 +266,8 @@ void size(t_info *info, int *x, int *y)
 
 	fd = open_file(info->path);
 	tmp = ft_calloc(1, 1);
-	i = 0;
-	while (tmp)
-	{
-		tmp = get_next_line(fd);
-		*y += 1;
-	}
-	get_next_line(fd);
-	close(fd);
-	free(tmp);
-	fd = open_file(info->path);
-	tmp = ft_calloc(1, 1);
+	if (!tmp)
+		return ;
 	i = 0;
 	if (tmp)
 	{
@@ -380,32 +283,32 @@ void size(t_info *info, int *x, int *y)
 			i++;
 		}
 	}
+	end(tmp, fd);
+	return (close(fd), free(tmp));
+}
+void size(t_info *info, int *x, int *y)
+{
+	int		fd;
+	char	*tmp;
+
+	fd = open_file(info->path);
+	tmp = ft_calloc(1, 1);
+	if (!tmp)
+		return ;
 	while (tmp)
 	{
 		tmp = get_next_line(fd);
+		*y += 1;
 	}
+	get_next_line(fd);
 	close(fd);
 	free(tmp);
+	size2(info, x);
 }
 
 void	put_pixel_on_map(t_info* info)
 {
-	// t_info_map *info_map;
-	// int			x;
-	// int			y;
-
-	// x = 0;
-	// y = -1;
-	// size(info, &x, &y);
-	// printf("x = %d && y = %d\n", x, y);
-	// //info->points = ft_calloc
-	// info_map = ft_calloc(x * y, sizeof(t_info_map));
-	//parse(info, info_map, x * y);
-	// info->height = y;
-	// info->width = x;
-	//printf("x = %d y = %d z = %d color = %s\n",info_map[INDEX].x,info_map[INDEX].y,info_map[INDEX].z,info_map[INDEX].color);
 	start_put_pixel(info, info->info_map);
-	//free(info_map);
 }
 
 
