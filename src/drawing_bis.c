@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:21:21 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 17:28:19 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:22:12 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,47 @@ void	end(char *tmp, int fd)
 	}
 	free(tmp);
 }
+
+// void my_map_is_valid(t_info* info, int *x)
+// {
+// 	int		fd;
+// 	int		i;
+// 	int		x_bis;
+// 	char	*tmp;
+
+// 	x_bis = -1;
+// 	fd = open_file(info->path);
+// 	tmp = get_next_line(fd);
+// 	if (!tmp)
+// 		return ;
+// 	while (tmp)
+// 	{
+// 		i = 0;
+// 		while (tmp && tmp[i])
+// 		{
+// 			if (tmp[i] != ' ')
+// 			{
+// 				while (tmp[i] != ' ' && tmp[i + 1])
+// 				{
+// 					i++;
+// 				}
+// 				x_bis++;
+// 			}
+// 			i++;
+// 		}
+// 		//printf("%s\n",tmp);
+// 		printf("x = %d && %d\n",x_bis,*x);
+// 		if (*x != x_bis)
+// 		{
+// 			ft_putstr_fd("Error rip\n",1);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		x_bis = 0;
+// 		free(tmp);
+// 		tmp = get_next_line(fd);
+// 	}
+
+// }
 
 void	size2(t_info *info, int *x)
 {
@@ -48,6 +89,7 @@ void	size2(t_info *info, int *x)
 			i++;
 		}
 	}
+	//return (my_map_is_valid(info,x),end(tmp, fd), close(fd), free(tmp));
 	return (end(tmp, fd), close(fd), free(tmp));
 }
 
