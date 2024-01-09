@@ -24,36 +24,32 @@ typedef struct s_info_map
 
 typedef struct s_info
 {
-	mlx_t		*mlx;
-	mlx_image_t	*img;
-	t_info_map	*info_map;
-	int			refresh;
-	int			height;
-	int			width;
-	char		*path;
-	char		***tab2d;
-	int			x0;
-	int			y0;
-	int			z0;
-	int			x1;
-	int			y1;
-	int			z1;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_info_map		*info_map;
+	int				refresh;
+	int				height;
+	int				width;
+	char			*path;
 	float			DEG_X;
- 	float 		DEG_Y;
-	float 		DEG_Z;
-	int 		temp_x0;
-	int			x0_iso;
-	int			y0_iso;
-	int			x1_iso;
-	int			y1_iso;
-	int			temp_x1;
-	int			temp_y1;
-	int			temp_y0;
+ 	float 			DEG_Y;
+	float 			DEG_Z;
 	float			scale;
 	float			rotation_angle_x;
-	float 		rotation_angle_y;
+	float 			rotation_angle_y;
 	float			rotation_angle_z;
 	float			z_rotation_angle;
+	float			center_x;
+	float			center_y;
+	float			center_z;
+	float			temp_x;
+	float			temp_y;
+	float			temp_z;
+	int				dx;
+	int				dy;
+	int				incX;
+	int				incY;
+
 }				t_info;
 
 typedef struct s_increase

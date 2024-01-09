@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 11:43:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 14:24:59 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,73 +18,99 @@ int	open_file(char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
+	{
+		ft_putstr_fd("Error\n",1);
 		exit(EXIT_FAILURE);
+	}
 	return (fd);
 }
-
-void link_pxl(t_info* info, int x0, int y0, int x1, int y1, unsigned int color)
+void horizontal_pxl(t_iso* iso, unsigned int color, t_info* info)
 {
-			int dx = x1 - x0;
-			int dy = y1 - y0;
-			int incX = SGN(dx);
-			int incY = SGN(dy);
-			dx = ABS(dx);
-			dy = ABS(dy);
-	
-			if (dy == 0)
-			{
 				// horizontal line
-				for (int x = x0; x != x1 + incX; x += incX)
-					mlx_put_pixel(info->img, x,y0, color);
-			}
-			else if (dx == 0)
-			{
-				// vertical line
-				for (int y = y0; y != y1 + incY; y += incY)
-					mlx_put_pixel(info->img, x0,y, color);
-			}
-			else if (dx >= dy)
-			{
-				// more horizontal than vertical
-				int slope = 2 * dy;
-				int error = -dx;
-				int errorInc = -2 * dx;
-				int y = y0;
+	int x = (int)iso->x0_iso;
 
-				for (int x = x0; x != x1 + incX; x += incX)
-				{
-					mlx_put_pixel(info->img, x,y, color);
-					error += slope;
-
-					if (error >= 0)
-					{
-						y += incY;
-						error += errorInc;
-					}
-				}
-			}
-			else
-			{
-				// more vertical than horizontal
-				int slope = 2 * dx;
-				int error = -dy;
-				int errorInc = -2 * dy;
-				int x = x0;
-
-				for (int y = y0; y != y1 + incY; y += incY)
-				{
-					mlx_put_pixel(info->img, x,y, color);
-					error += slope;
-
-					if (error >= 0)
-					{
-						x += incX;
-						error += errorInc;
-					}
-				}
-			}
+	while (x != (int)iso->x1_iso + info->incX)
+	{
+		mlx_put_pixel(info->img, x, (int)iso->y0_iso, color);
+		x += info->incX;
+	}
 }
 
+void vertical_pxl(t_iso* iso, unsigned int color, t_info* info)
+{
+				// horizontal line
+		int y = (int)iso->y0_iso;
+
+		while (y != (int)iso->y1_iso + info->incY)
+		{
+			mlx_put_pixel(info->img, (int)iso->x0_iso, y, color);
+			y += info->incY;
+		}
+
+}
+
+void moreHthanV(t_info* info,t_iso* iso,unsigned int color)
+{
+	int slope = 2 * info->dy;
+	int error = -info->dx;
+	int errorInc = -2 * info->dx;
+	int y = (int)iso->y0_iso;
+	int x = (int)iso->x0_iso;
+
+	while (x != (int)iso->x1_iso + info->incX)
+	{
+		mlx_put_pixel(info->img, x, y, color);
+		error += slope;
+
+		if (error >= 0)
+		{
+			y += info->incY;
+			error += errorInc;
+		}
+		x += info->incX;
+	}
+}
+
+void moreVthanH(t_info* info,t_iso* iso,unsigned int color)
+{
+int slope = 2 * info->dx;
+int error = -info->dy;
+int errorInc = -2 * info->dy;
+int x = (int)iso->x0_iso;
+int y = (int)iso->y0_iso;
+
+while (y != (int)iso->y1_iso + info->incY)
+{
+    mlx_put_pixel(info->img, x, y, color);
+    error += slope;
+
+    if (error >= 0)
+    {
+        x += info->incX;
+        error += errorInc;
+    }
+    y += info->incY;
+}
+
+}
+void link_pxl(t_info* info, t_iso* iso, unsigned int color)
+{
+			info->dx = (int)iso->x1_iso - (int)iso->x0_iso;
+			info->dy = (int)iso->y1_iso - (int)iso->y0_iso;
+			info->incX = SGN(info->dx);
+			info->incY = SGN(info->dy);
+			info->dx = ABS(info->dx);
+			info->dy = ABS(info->dy);
+	
+			if (info->dy == 0)
+				horizontal_pxl(iso, color, info);
+			else if (info->dx == 0)
+				vertical_pxl(iso, color, info);
+			else if (info->dx >= info->dy)
+				moreHthanV(info, iso, color);
+			else
+				moreVthanH(info, iso, color);
+}
 
 //0xFFFFFFFF
 void isometric_transform(t_rot* rot, float *x_iso, float *y_iso, t_info* info) {
@@ -96,33 +122,31 @@ void isometric_transform(t_rot* rot, float *x_iso, float *y_iso, t_info* info) {
 }
 
 void rotate_about_center(t_info_map* info_map , t_rot* rot, t_info *info) {
-    float center_x = info->width / 2; // Define center x
-    float center_y = info->height / 2; // Define center y
-    float center_z = 0.0f; // Define center z
-
+    info->center_x = info->width / 2; // Define center x
+    info->center_y = info->height / 2; // Define center y
+    info->center_z = 0.0f; // Define center z
 	info_map->x = info_map->origin_x;
 	info_map->y = info_map->origin_y;
 	info_map->z = info_map->origin_z;
-
-    info_map->x -= center_x;
-    info_map->y -= center_y;
-    info_map->z -= center_z;
-    float temp_y = info_map->y * cosf(info->rotation_angle_x) - info_map->z * sinf(info->rotation_angle_x);
-    float temp_z = info_map->y * sinf(info->rotation_angle_x) + info_map->z * cosf(info->rotation_angle_x);
-    info_map->y = temp_y;
-    info_map->z = temp_z;
-    float temp_x = info_map->x * cosf(info->rotation_angle_y) + info_map->z * sinf(info->rotation_angle_y);
-    temp_z = -info_map->x * sinf(info->rotation_angle_y) + info_map->z * cosf(info->rotation_angle_y);
-    info_map->x = temp_x;
-    info_map->z = temp_z;
-    temp_x = info_map->x * cosf(info->rotation_angle_z) - info_map->y * sinf(info->rotation_angle_z);
-    temp_y = info_map->x * sinf(info->rotation_angle_z) + info_map->y * cosf(info->rotation_angle_z);
-    info_map->x = temp_x * info->scale;
-    info_map->y = temp_y * info->scale;
-    info_map->z = temp_z;
-    rot->x0_rot = info_map->x + center_x;
-    rot->y0_rot = info_map->y + center_y;
-    rot->z0_rot = info_map->z + center_z;
+    info_map->x -= info->center_x;
+    info_map->y -= info->center_y;
+    info_map->z -= info->center_z;
+    info->temp_y = info_map->y * cosf(info->rotation_angle_x) - info_map->z * sinf(info->rotation_angle_x);
+    info->temp_z = info_map->y * sinf(info->rotation_angle_x) + info_map->z * cosf(info->rotation_angle_x);
+    info_map->y = info->temp_y;
+    info_map->z = info->temp_z;
+    info->temp_x = info_map->x * cosf(info->rotation_angle_y) + info_map->z * sinf(info->rotation_angle_y);
+    info->temp_z = -info_map->x * sinf(info->rotation_angle_y) + info_map->z * cosf(info->rotation_angle_y);
+    info_map->x = info->temp_x;
+    info_map->z = info->temp_z;
+    info->temp_x = info_map->x * cosf(info->rotation_angle_z) - info_map->y * sinf(info->rotation_angle_z);
+    info->temp_y = info_map->x * sinf(info->rotation_angle_z) + info_map->y * cosf(info->rotation_angle_z);
+    info_map->x = info->temp_x * info->scale;
+    info_map->y = info->temp_y * info->scale;
+    info_map->z = info->temp_z;
+    rot->x0_rot = info_map->x + info->center_x;
+    rot->y0_rot = info_map->y + info->center_y;
+    rot->z0_rot = info_map->z + info->center_z;
 }
 
 //void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1, unsigned int color) {
@@ -152,7 +176,8 @@ void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_inf
     if (iso.x0_iso >= 0 && iso.x0_iso < info->img->width && iso.y0_iso >= 0 && iso.y0_iso < info->img->height &&
         iso.x1_iso >= 0 && iso.x1_iso < info->img->width && iso.y1_iso >= 0 && iso.y1_iso < info->img->height) {
         // Draw the line using isometric coordinates
-        link_pxl(info, iso.x0_iso, iso.y0_iso, iso.x1_iso, iso.y1_iso, info_map->color);
+        //link_pxl(info, iso.x0_iso, iso.y0_iso, iso.x1_iso, iso.y1_iso, info_map->color);
+		link_pxl(info, &iso, info_map->color);
     }
 }
 
@@ -198,8 +223,9 @@ int	ft_strlen_int(int number)
 }
 
 unsigned int hex_to_uint(const char *hex) {
-    unsigned int result = 0;
+    unsigned int result;
 
+	result = 0;
 	if (!hex)
 		return (0);
     while (*hex) {
