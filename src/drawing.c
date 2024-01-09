@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 11:40:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:43:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ void link_pxl(t_info* info, int x0, int y0, int x1, int y1, unsigned int color)
 
 
 //0xFFFFFFFF
-void isometric_transform(float x, float y, float z, float *x_iso, float *y_iso, t_info* info) {
+void isometric_transform(t_rot* rot, float *x_iso, float *y_iso, t_info* info) {
     float radX = info->DEG_X * M_PI / 180;
     float radY = info->DEG_Y * M_PI / 180;
 
-    *x_iso = (x - z) * cosf(radX) * info->scale;
-    *y_iso = (y + (x + z) * sinf(radY)) * info->scale;
+    *x_iso = (rot->x0_rot - rot->z0_rot) * cosf(radX) * info->scale;
+    *y_iso = (rot->y0_rot + (rot->x0_rot + rot->z0_rot) * sinf(radY)) * info->scale;
 }
 
 void rotate_about_center(t_info_map* info_map , t_rot* rot, t_info *info) {
@@ -139,8 +139,8 @@ void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_inf
     rotate_about_center(info_map2, &rot2, info);
 
     // Apply isometric transformation to start and end points
-    isometric_transform(rot.x0_rot, rot.y0_rot, rot.z0_rot, &iso.x0_iso, &iso.y0_iso, info);
-    isometric_transform(rot2.x0_rot, rot2.y0_rot, rot2.z0_rot, &iso.x1_iso, &iso.y1_iso, info);
+    isometric_transform(&rot, &iso.x0_iso, &iso.y0_iso, info);
+    isometric_transform(&rot2, &iso.x1_iso, &iso.y1_iso, info);
 
     // Adjust for the center of the image
     iso.x0_iso += info->img->width / 2;
