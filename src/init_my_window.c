@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:28:29 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 15:13:02 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:02:34 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ int	init(t_info *info)
 	size(info, &x, &y);
 	info->height = y;
 	info->width = x;
-	printf("x = %d && y = %d\n", x, y);
-	// info->points = ft_calloc
 	info_map = ft_calloc(x * y, sizeof(t_info_map));
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	info->mlx = mlx_init(WIDTH, HEIGHT, "42FDF", true);
@@ -42,7 +40,6 @@ int	init(t_info *info)
 
 void	destroy_loop_hook(t_info *info)
 {
-	// free_my_tab(info->tab2d);
 	mlx_delete_image(info->mlx, info->img);
 	mlx_terminate(info->mlx);
 	free(info->path);
