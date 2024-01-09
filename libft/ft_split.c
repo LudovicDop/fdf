@@ -6,72 +6,98 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 16:32:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 16:13:59 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 17:31:35 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char **allocate_words(char const *s, char c, unsigned int len) {
-    unsigned int word_count = 0;
-    char **words;
-    unsigned int i = 0;
+static char	**allocate_words(char const *s, char c, unsigned int len)
+{
+	unsigned int	word_count;
+	char			**words;
+	unsigned int	i;
 
-    // Count words and allocate memory for words array
-    while (i < len) {
-        if (s[i] != c) {
-            word_count++;
-            while (i < len && s[i] != c) i++;
-        } else {
-            i++;
-        }
-    }
-    words = (char **)malloc(sizeof(char *) * (word_count + 1));
-    if (!words) return NULL;
-
-    return words;
+	word_count = 0;
+	i = 0;
+	while (i < len)
+	{
+		if (s[i] != c)
+		{
+			word_count++;
+			while (i < len && s[i] != c)
+				i++;
+		}
+		else
+		{
+			i++;
+		}
+	}
+	words = (char **)malloc(sizeof(char *) * (word_count + 1));
+	if (!words)
+		return (NULL);
+	return (words);
 }
 
-static void fill_words(char const *s, char c, char **words, unsigned int len) {
-    unsigned int i = 0, j, word_index = 0, word_len;
+static char	*create_word(const char *start, unsigned int word_len)
+{
+	char	*word;
 
-    // Fill words array with each word
-    while (i < len) {
-        if (s[i] != c) {
-            word_len = 0;
-            j = i;
-            while (i < len && s[i] != c) {
-                word_len++;
-                i++;
-            }
-            words[word_index] = (char *)malloc(sizeof(char) * (word_len + 1));
-            if (!words[word_index]) {
-                // Handle memory allocation failure
-                // Free already allocated memory
-                while (word_index > 0) {
-                    free(words[--word_index]);
-                }
-                free(words);
-                return;
-            }
-            ft_strlcpy(words[word_index], &s[j], word_len + 1);
-            word_index++;
-        } else {
-            i++;
-        }
-    }
-    words[word_index] = NULL; // Null-terminate the array of words
+	word = (char *)malloc(sizeof(char) * (word_len + 1));
+	if (word)
+	{
+		ft_strlcpy(word, start, word_len + 1);
+	}
+	return (word);
 }
 
+static void	free_words(char **words, unsigned int word_index)
+{
+	while (word_index > 0)
+	{
+		free(words[--word_index]);
+	}
+	free(words);
+}
 
-char **ft_split(char const *s, char c) {
-    if (!s) return NULL;
-    
-    unsigned int len = ft_strlen(s);
-	//printf("len = %u\n",len);
-    char **words = allocate_words(s, c, len);
-    if (!words) return NULL;
+static void	fill_words(const char *s, char c, char **words, unsigned int len)
+{
+	unsigned int	i;
+	unsigned int	j;
+	unsigned int	word_index;
 
-    fill_words(s, c, words, len);
-    return words;
+	i = 0;
+	j = 0;
+	word_index = 0;
+	while (i < len)
+	{
+		if (s[i] != c)
+		{
+			j = i;
+			while (i < len && s[i] != c)
+				i++;
+			words[word_index] = create_word(&s[j], i - j);
+			if (!words[word_index])
+				return (free_words(words, word_index));
+			word_index++;
+		}
+		else
+			i++;
+	}
+	words[word_index] = NULL;
+}
+
+char	**ft_split(char const *s, char c)
+{
+	unsigned int	len;
+	char			**words;
+
+	if (!s)
+		return (NULL);
+	len = ft_strlen(s);
+	words = allocate_words(s, c, len);
+	if (!words)
+		return (NULL);
+	fill_words(s, c, words, len);
+	return (words);
 }

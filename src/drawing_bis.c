@@ -6,64 +6,20 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:21:21 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 16:33:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 17:28:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mlx.h"
 
-void	parse2(char *buffer, t_info_map *info_map, int fd, int size)
-{
-	t_increase	x;
-	char		**tmp;
-
-	x.i = 0;
-	x.x = 0;
-	x.y = 0;
-	while (buffer)
-	{
-		tmp = ft_split(buffer, ' ');
-		if (!tmp)
-			return (free(buffer));
-		x.x = 0;
-		info_map[x.i].x = -1;
-		while (tmp[x.x] && x.i < size)
-		{
-			info_map[x.i].color = hex_to_uint(ft_strchr(tmp[x.x], ','));
-			info_map[x.i].origin_z = ft_atoi(tmp[x.x]);
-			info_map[x.i].origin_x = x.x;
-			info_map[x.i].origin_y = x.y;
-			x.x++;
-			x.i++;
-		}
-		x.y++;
-        free(buffer);
-		buffer = get_next_line(fd);
-        free_char_array(tmp);
-	}
-    free(buffer);
-}
-
-void	parse(t_info *info, t_info_map *info_map, int size)
-{
-	int		fd;
-	char	*buffer;
-
-	fd = open_file(info->path);
-	buffer = get_next_line(fd);
-	info_map[0].origin_x = 0;
-	info_map[0].origin_y = 0;
-	parse2(buffer, info_map, fd, size);
-}
-
 void	end(char *tmp, int fd)
 {
 	while (tmp)
-    {
+	{
 		tmp = get_next_line(fd);
-        free(tmp);
-    }
-    free(tmp);
+		free(tmp);
+	}
+	free(tmp);
 }
 
 void	size2(t_info *info, int *x)
@@ -79,21 +35,20 @@ void	size2(t_info *info, int *x)
 	i = 0;
 	if (tmp)
 	{
-        free(tmp);
+		free(tmp);
 		tmp = get_next_line(fd);
 		while (tmp && tmp[i])
 		{
 			if (tmp[i] != ' ')
 			{
 				*x += 1;
-				while (tmp[i] && tmp[i] != ' ' && tmp[i] != '\n')
-					i++;
+				while (tmp[i++] && tmp[i] != ' ' && tmp[i] != '\n')
+					;
 			}
 			i++;
 		}
 	}
-	end(tmp, fd);
-	return (close(fd), free(tmp));
+	return (end(tmp, fd), close(fd), free(tmp));
 }
 
 void	size(t_info *info, int *x, int *y)
@@ -107,7 +62,7 @@ void	size(t_info *info, int *x, int *y)
 		return ;
 	while (tmp)
 	{
-        free(tmp);
+		free(tmp);
 		tmp = get_next_line(fd);
 		*y += 1;
 	}

@@ -118,4 +118,7 @@ void	ft_hooks_x(t_info *info);
 void	ft_hooks_a(t_info *info);
 void	ft_hooks_c(t_info *info);
 void free_char_array(char **array);
+void	parse3(t_info_map *info_map, t_increase *x, char **tmp);
+void	parse2(char *buffer, t_info_map *info_map, int fd, int size);
+void	parse(t_info *info, t_info_map *info_map, int size);
 #endif
