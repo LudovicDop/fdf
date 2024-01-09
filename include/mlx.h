@@ -74,6 +74,12 @@ typedef struct s_rot
 	float x1_rot;
 	float y1_rot;
 	float z1_rot;
+	float origin_x0_rot;
+	float origin_y0_rot;
+	float origin_z0_rot;
+	float origin_x1_rot;
+	float origin_y1_rot;
+	float origin_z1_rot;
 }	t_rot;
 
 typedef struct s_iso

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 10:17:52 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:14:42 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void rotate_about_center(t_info_map* info_map , float *x_rot, float *y_rot, floa
     info_map->y = temp_y;
     info_map->z = temp_z;
     float temp_x = info_map->x * cosf(info->rotation_angle_y) + info_map->z * sinf(info->rotation_angle_y);
-    temp_z = -(info_map->x) * sinf(info->rotation_angle_y) + info_map->z * cosf(info->rotation_angle_y);
+    temp_z = -info_map->x * sinf(info->rotation_angle_y) + info_map->z * cosf(info->rotation_angle_y);
     info_map->x = temp_x;
     info_map->z = temp_z;
     temp_x = info_map->x * cosf(info->rotation_angle_z) - info_map->y * sinf(info->rotation_angle_z);
@@ -132,6 +132,7 @@ void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_inf
 
 	if (!info_map->color)
 		info_map->color = 0xFFFFFFFF;
+		
     // Apply rotation around the center
     rotate_about_center(info_map, &rot.x0_rot, &rot.y0_rot, &rot.z0_rot, info);
     rotate_about_center(info_map2, &rot.x1_rot, &rot.y1_rot, &rot.z1_rot, info);
