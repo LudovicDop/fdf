@@ -13,12 +13,12 @@
 
 typedef struct s_info_map
 {
-	int	x;
-	int	y;
-	int z;
-	int origin_x;
-	int origin_y;
-	int origin_z;
+	float	x;
+	float	y;
+	float z;
+	float origin_x;
+	float origin_y;
+	float origin_z;
 	unsigned int color;
 }	t_info_map;
 

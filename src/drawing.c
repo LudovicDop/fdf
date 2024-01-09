@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 11:14:42 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 11:40:53 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void isometric_transform(float x, float y, float z, float *x_iso, float *y_iso, 
     *y_iso = (y + (x + z) * sinf(radY)) * info->scale;
 }
 
-void rotate_about_center(t_info_map* info_map , float *x_rot, float *y_rot, float *z_rot, t_info *info) {
+void rotate_about_center(t_info_map* info_map , t_rot* rot, t_info *info) {
     float center_x = info->width / 2; // Define center x
     float center_y = info->height / 2; // Define center y
     float center_z = 0.0f; // Define center z
@@ -120,26 +120,27 @@ void rotate_about_center(t_info_map* info_map , float *x_rot, float *y_rot, floa
     info_map->x = temp_x * info->scale;
     info_map->y = temp_y * info->scale;
     info_map->z = temp_z;
-    *x_rot = info_map->x + center_x;
-    *y_rot = info_map->y + center_y;
-    *z_rot = info_map->z + center_z;
+    rot->x0_rot = info_map->x + center_x;
+    rot->y0_rot = info_map->y + center_y;
+    rot->z0_rot = info_map->z + center_z;
 }
 
 //void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1, unsigned int color) {
 void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_info_map* info_map2) {
     t_rot	rot;
+	t_rot	rot2;
 	t_iso	iso;
 
 	if (!info_map->color)
 		info_map->color = 0xFFFFFFFF;
 		
     // Apply rotation around the center
-    rotate_about_center(info_map, &rot.x0_rot, &rot.y0_rot, &rot.z0_rot, info);
-    rotate_about_center(info_map2, &rot.x1_rot, &rot.y1_rot, &rot.z1_rot, info);
+    rotate_about_center(info_map, &rot, info);
+    rotate_about_center(info_map2, &rot2, info);
 
     // Apply isometric transformation to start and end points
     isometric_transform(rot.x0_rot, rot.y0_rot, rot.z0_rot, &iso.x0_iso, &iso.y0_iso, info);
-    isometric_transform(rot.x1_rot, rot.y1_rot, rot.z1_rot, &iso.x1_iso, &iso.y1_iso, info);
+    isometric_transform(rot2.x0_rot, rot2.y0_rot, rot2.z0_rot, &iso.x1_iso, &iso.y1_iso, info);
 
     // Adjust for the center of the image
     iso.x0_iso += info->img->width / 2;
@@ -165,11 +166,11 @@ void start_put_pixel(t_info* info, t_info_map* info_map)
 	i = 0;
 	while (i < node)
 	{ 
-		if (info_map[i].x < info->width && i < node - 1) 
+		if (info_map[i].origin_x < info->width && i < node - 1) 
 		{
-			if (info_map[i].x < info->width - 1)
+			if (info_map[i].origin_x < info->width - 1)
 								isometric_transform_and_draw_line(info, &info_map[i], &info_map[i + 1]);
-			if (info_map[i].y < info->height - 1)
+			if (info_map[i].origin_y < info->height - 1)
 								isometric_transform_and_draw_line(info, &info_map[i], &info_map[i + info->width]);
 		}
 		i++;
@@ -254,8 +255,8 @@ void	parse(t_info* info, t_info_map *info_map, int size)
 
 	fd = open_file(info->path);
 	buffer = get_next_line(fd);
-	info_map[0].x = 0;
-	info_map[0].y = 0;
+	info_map[0].origin_x = 0;
+	info_map[0].origin_y = 0;
 	parse2(buffer, info_map, fd, size);
 }
 
