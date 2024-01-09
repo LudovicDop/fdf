@@ -16,6 +16,9 @@ typedef struct s_info_map
 	int	x;
 	int	y;
 	int z;
+	int origin_x;
+	int origin_y;
+	int origin_z;
 	unsigned int color;
 }	t_info_map;
 

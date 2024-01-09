@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/08 17:19:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 10:17:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,30 +95,34 @@ void isometric_transform(float x, float y, float z, float *x_iso, float *y_iso, 
     *y_iso = (y + (x + z) * sinf(radY)) * info->scale;
 }
 
-void rotate_about_center(float x, float y, float z, float *x_rot, float *y_rot, float *z_rot, t_info *info) {
+void rotate_about_center(t_info_map* info_map , float *x_rot, float *y_rot, float *z_rot, t_info *info) {
     float center_x = info->width / 2; // Define center x
     float center_y = info->height / 2; // Define center y
     float center_z = 0.0f; // Define center z
 
-    x -= center_x;
-    y -= center_y;
-    z -= center_z;
-    float temp_y = y * cosf(info->rotation_angle_x) - z * sinf(info->rotation_angle_x);
-    float temp_z = y * sinf(info->rotation_angle_x) + z * cosf(info->rotation_angle_x);
-    y = temp_y;
-    z = temp_z;
-    float temp_x = x * cosf(info->rotation_angle_y) + z * sinf(info->rotation_angle_y);
-    temp_z = -x * sinf(info->rotation_angle_y) + z * cosf(info->rotation_angle_y);
-    x = temp_x;
-    z = temp_z;
-    temp_x = x * cosf(info->rotation_angle_z) - y * sinf(info->rotation_angle_z);
-    temp_y = x * sinf(info->rotation_angle_z) + y * cosf(info->rotation_angle_z);
-    x = temp_x * info->scale;
-    y = temp_y * info->scale;
-    z = temp_z;
-    *x_rot = x + center_x;
-    *y_rot = y + center_y;
-    *z_rot = z + center_z;
+	info_map->x = info_map->origin_x;
+	info_map->y = info_map->origin_y;
+	info_map->z = info_map->origin_z;
+
+    info_map->x -= center_x;
+    info_map->y -= center_y;
+    info_map->z -= center_z;
+    float temp_y = info_map->y * cosf(info->rotation_angle_x) - info_map->z * sinf(info->rotation_angle_x);
+    float temp_z = info_map->y * sinf(info->rotation_angle_x) + info_map->z * cosf(info->rotation_angle_x);
+    info_map->y = temp_y;
+    info_map->z = temp_z;
+    float temp_x = info_map->x * cosf(info->rotation_angle_y) + info_map->z * sinf(info->rotation_angle_y);
+    temp_z = -(info_map->x) * sinf(info->rotation_angle_y) + info_map->z * cosf(info->rotation_angle_y);
+    info_map->x = temp_x;
+    info_map->z = temp_z;
+    temp_x = info_map->x * cosf(info->rotation_angle_z) - info_map->y * sinf(info->rotation_angle_z);
+    temp_y = info_map->x * sinf(info->rotation_angle_z) + info_map->y * cosf(info->rotation_angle_z);
+    info_map->x = temp_x * info->scale;
+    info_map->y = temp_y * info->scale;
+    info_map->z = temp_z;
+    *x_rot = info_map->x + center_x;
+    *y_rot = info_map->y + center_y;
+    *z_rot = info_map->z + center_z;
 }
 
 //void isometric_transform_and_draw_line(t_info* info, float x0, float y0, float z0, float x1, float y1, float z1, unsigned int color) {
@@ -129,8 +133,8 @@ void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_inf
 	if (!info_map->color)
 		info_map->color = 0xFFFFFFFF;
     // Apply rotation around the center
-    rotate_about_center(info_map->x, info_map->y, info_map->z, &rot.x0_rot, &rot.y0_rot, &rot.z0_rot, info);
-    rotate_about_center(info_map2->x, info_map2->y, info_map2->z, &rot.x1_rot, &rot.y1_rot, &rot.z1_rot, info);
+    rotate_about_center(info_map, &rot.x0_rot, &rot.y0_rot, &rot.z0_rot, info);
+    rotate_about_center(info_map2, &rot.x1_rot, &rot.y1_rot, &rot.z1_rot, info);
 
     // Apply isometric transformation to start and end points
     isometric_transform(rot.x0_rot, rot.y0_rot, rot.z0_rot, &iso.x0_iso, &iso.y0_iso, info);
@@ -149,6 +153,7 @@ void isometric_transform_and_draw_line(t_info* info, t_info_map* info_map, t_inf
         link_pxl(info, iso.x0_iso, iso.y0_iso, iso.x1_iso, iso.y1_iso, info_map->color);
     }
 }
+
 
 void start_put_pixel(t_info* info, t_info_map* info_map)
 {
@@ -231,9 +236,9 @@ void	parse2(char *buffer, t_info_map* info_map, int fd, int size)
 		while (tmp[x.x] && x.i < size)
 		{
 			info_map[x.i].color = hex_to_uint(ft_strchr(tmp[x.x], ','));
-			info_map[x.i].z = ft_atoi(tmp[x.x]);
-			info_map[x.i].x = x.x;
-			info_map[x.i].y = x.y;
+			info_map[x.i].origin_z = ft_atoi(tmp[x.x]);
+			info_map[x.i].origin_x = x.x;
+			info_map[x.i].origin_y = x.y;
 			x.x++;
 			x.i++;
 		}
