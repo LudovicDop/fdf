@@ -92,7 +92,6 @@ void				put_pixel_on_map(t_info *info);
 int					open_file(char *path);
 char				***ft_split_for_mlx(char *string);
 void				free_my_tab(char **tab);
-void				free_my_tab_2d(char **tab);
 void				start_put_pixel(t_info *info, t_info_map *info_map);
 void				size(t_info *info, int *x, int *y);
 void				parse(t_info *info, t_info_map *info_map, int size);
@@ -118,4 +117,5 @@ void	ft_hooks_d(t_info *info);
 void	ft_hooks_x(t_info *info);
 void	ft_hooks_a(t_info *info);
 void	ft_hooks_c(t_info *info);
+void free_char_array(char **array);
 #endif

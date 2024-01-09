@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:21:21 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 16:07:51 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:33:39 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ void	parse2(char *buffer, t_info_map *info_map, int fd, int size)
 			x.i++;
 		}
 		x.y++;
+        free(buffer);
 		buffer = get_next_line(fd);
+        free_char_array(tmp);
 	}
+    free(buffer);
 }
 
 void	parse(t_info *info, t_info_map *info_map, int size)
@@ -56,7 +59,11 @@ void	parse(t_info *info, t_info_map *info_map, int size)
 void	end(char *tmp, int fd)
 {
 	while (tmp)
+    {
 		tmp = get_next_line(fd);
+        free(tmp);
+    }
+    free(tmp);
 }
 
 void	size2(t_info *info, int *x)
@@ -72,6 +79,7 @@ void	size2(t_info *info, int *x)
 	i = 0;
 	if (tmp)
 	{
+        free(tmp);
 		tmp = get_next_line(fd);
 		while (tmp && tmp[i])
 		{
@@ -99,10 +107,10 @@ void	size(t_info *info, int *x, int *y)
 		return ;
 	while (tmp)
 	{
+        free(tmp);
 		tmp = get_next_line(fd);
 		*y += 1;
 	}
-	get_next_line(fd);
 	close(fd);
 	free(tmp);
 	size2(info, x);

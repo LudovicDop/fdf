@@ -6,28 +6,26 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:08:05 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 16:08:39 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:24:51 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/mlx.h"
 
-void	free_my_tab_2d(char **tab)
-{
-	int	i;
-	int	j;
+#include <stdlib.h>
 
-	i = 0;
-	j = 0;
-	while (tab[i])
-	{
-		j = 0;
-		while (tab[i][j])
-		{
-			free(tab[i]);
-			j++;
-		}
-		i++;
-	}
-	free(tab);
+void free_char_array(char **array) {
+    if (array == NULL) {
+        return; // Handle null pointer
+    }
+
+    int i = 0;
+    while (array[i] != NULL) {
+		printf("array[%d] = free\n",i);
+        free(array[i]); // Free each string
+        i++;
+    }
+
+    free(array); // Finally, free the array of pointers itself
 }
+
