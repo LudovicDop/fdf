@@ -49,6 +49,11 @@ typedef struct s_info
 	int				dy;
 	int				incX;
 	int				incY;
+	int				slope;
+	int				error;
+	int				error_inc;
+	int				x;
+	int				y;
 
 }				t_info;
 
