@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 18:27:01 by ldoppler          #+#    #+#             */
+/*   Updated: 2024/01/10 18:27:12 by ldoppler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MLX_H
 # define MLX_H
 # define WIDTH 1080
@@ -27,9 +39,9 @@ typedef struct s_info
 	int				height;
 	int				width;
 	char			*path;
-	float			DEG_X;
-	float			DEG_Y;
-	float			DEG_Z;
+	float			deg_x;
+	float			deg_y;
+	float			deg_z;
 	float			scale;
 	float			rotation_angle_x;
 	float			rotation_angle_y;
@@ -43,8 +55,8 @@ typedef struct s_info
 	float			temp_z;
 	int				dx;
 	int				dy;
-	int				incX;
-	int				incY;
+	int				inc_x;
+	int				inc_y;
 	int				slope;
 	int				error;
 	int				error_inc;
@@ -120,7 +132,7 @@ void				parse3(t_info_map *info_map, t_increase *x, char **tmp);
 void				parse2(char *buffer, t_info_map *info_map, int fd,
 						int size);
 void				parse(t_info *info, t_info_map *info_map, int size);
-unsigned int	merge_rgba(unsigned int color1, unsigned int color2);
-int abs(int x);
-int sgn(int x);
+unsigned int		merge_rgba(unsigned int color1, unsigned int color2);
+int					abs(int x);
+int					sgn(int x);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 18:12:07 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/01/10 18:28:48 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	horizontal_pxl(t_iso *iso, unsigned int color, t_info *info)
 	int	x;
 
 	x = (int)iso->x0_iso;
-	while (x != (int)iso->x1_iso + info->incX)
+	while (x != (int)iso->x1_iso + info->inc_x)
 	{
 		mlx_put_pixel(info->img, x, (int)iso->y0_iso, color);
-		x += info->incX;
+		x += info->inc_x;
 	}
 }
 
@@ -42,10 +42,10 @@ void	vertical_pxl(t_iso *iso, unsigned int color, t_info *info)
 	int	y;
 
 	y = (int)iso->y0_iso;
-	while (y != (int)iso->y1_iso + info->incY)
+	while (y != (int)iso->y1_iso + info->inc_y)
 	{
 		mlx_put_pixel(info->img, (int)iso->x0_iso, y, color);
-		y += info->incY;
+		y += info->inc_y;
 	}
 }
 
