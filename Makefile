@@ -1,24 +1,17 @@
 MAKEFLAGS += --silent
+SRC = ./src/drawing_bis.c ./src/drawing_bis2.c ./src/drawing_bis3.c ./src/drawing.c ./src/error.c ./src/hooks_feature.c ./src/hooks.c ./src/init_my_window.c ./src/main.c ./src/merge.c ./src/parsing.c ./src/tool.c
 CC = gcc -fsanitize=address -Wall -Werror -Wextra 
-#CC = gcc
-NAME = mlx.a
+NAME = fdf
+
 all : $(NAME)
 
-.c.o :
-	$(CC) -c $< -o $(<:.c=.o)
-$(NAME) : $(OBJ)
-	echo "Creation in progress..." 
+$(NAME):
 	make -C libft/
-	mv libft/libft.a .
-	cd MLX42/ && cmake -DDEBUG=1 -DGLFW_FETCH=0
-	cd ..
-	make -C MLX42/
 	make -C gnl/
-	mv gnl/gnl.a .
-	$(CC) src/*.c -L. gnl.a -lft -LMLX42 -lmlx42 -IMLX42/include -I./ -ldl -lglfw -pthread -lm -o fdf
+	cmake ./MLX42 -B ./MLX42/build && make -C ./MLX42/build -j4
+	$(CC) $(SRC) gnl/gnl.a -L./libft -lft -L./MLX42 -lmlx42 -I./MLX42/include -I./ -ldl -lglfw -pthread -lm -o $(NAME)
 	echo "Done ✅"
 clean : 
-	echo "clean in progress..."
 	rm -rf *.a
 	make clean -C libft/
 	make clean -C gnl/ 
@@ -26,9 +19,10 @@ clean :
 	rm -rf $(OBJ)
 	echo "Clean ✅ "
 fclean : clean
-	echo "fclean in progress..."
 	make fclean -C libft/
 	make fclean -C gnl/
 	rm -rf fdf
 	echo "Fclean ✅"
 re : fclean all $(NAME) 
+
+.PHONY: all clean fclean re

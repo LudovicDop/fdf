@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_bis2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:22:36 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 15:34:07 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:56:39 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	isometric_transform_and_draw_line(t_info *info, t_info_map *info_map,
 
 	if (!info_map->color)
 		info_map->color = 0xFFFFFFFF;
+	if (!info_map2->color) 
+		info_map2->color = 0xFFFFFFFF;
 	rotate_about_center(info_map, &rot, info);
 	rotate_about_center(info_map2, &rot2, info);
 	isometric_transform(&rot, &iso.x0_iso, &iso.y0_iso, info);
