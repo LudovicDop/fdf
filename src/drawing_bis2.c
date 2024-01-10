@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:22:36 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 16:09:03 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:34:07 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	isometric_transform_and_draw_line(t_info *info, t_info_map *info_map,
 		&& iso.x1_iso < info->img->width && iso.y1_iso >= 0
 		&& iso.y1_iso < info->img->height)
 	{
-		link_pxl(info, &iso, info_map->color);
+		link_pxl(info, &iso, merge_rgba(info_map->color, info_map2->color));
 	}
 }
 
