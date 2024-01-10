@@ -6,8 +6,6 @@
 # include "MLX42/MLX42.h"
 # include <math.h>
 # include <stdio.h>
-# define ABS(_x) ((_x) >= 0 ? (_x) : -(_x))
-# define SGN(_x) ((_x) < 0 ? -1 : ((_x) > 0 ? 1 : 0))
 
 typedef struct s_info_map
 {
@@ -123,4 +121,6 @@ void				parse2(char *buffer, t_info_map *info_map, int fd,
 						int size);
 void				parse(t_info *info, t_info_map *info_map, int size);
 unsigned int	merge_rgba(unsigned int color1, unsigned int color2);
+int abs(int x);
+int sgn(int x);
 #endif

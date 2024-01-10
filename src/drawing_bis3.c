@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_bis3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:23:09 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 16:09:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/10 15:51:16 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	link_pxl(t_info *info, t_iso *iso, unsigned int color)
 {
 	info->dx = (int)iso->x1_iso - (int)iso->x0_iso;
 	info->dy = (int)iso->y1_iso - (int)iso->y0_iso;
-	info->incX = SGN(info->dx);
-	info->incY = SGN(info->dy);
-	info->dx = ABS(info->dx);
-	info->dy = ABS(info->dy);
+	info->incX = sgn(info->dx);
+	info->incY = sgn(info->dy);
+	info->dx = abs(info->dx);
+	info->dy = abs(info->dy);
 	if (info->dy == 0)
 		horizontal_pxl(iso, color, info);
 	else if (info->dx == 0)

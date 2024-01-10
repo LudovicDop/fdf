@@ -22,14 +22,13 @@ clean :
 	rm -rf *.a
 	make clean -C libft/
 	make clean -C gnl/ 
-	make clean -C MLX42/
+	rm -rf MLX42/build
 	rm -rf $(OBJ)
 	echo "Clean ✅ "
 fclean : clean
 	echo "fclean in progress..."
 	make fclean -C libft/
 	make fclean -C gnl/
-	rm -rf ./MLX42/CMakeFiles ./MLX42/CMakeCache.txt 
 	rm -rf fdf
 	echo "Fclean ✅"
 re : fclean all $(NAME) 
