@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_my_window.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:28:29 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/11 14:15:27 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:00:46 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	init(t_info *info)
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	info->mlx = mlx_init(WIDTH, HEIGHT, "42FDF", true);
 	if (!info->mlx)
-		return (free(info), 1);
+		return (destroy_loop_hook(info), 1);
 	info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 	if (!info->img)
-		return (free(info), free(info->mlx), 1);
+		return (destroy_loop_hook(info), 1);
 	if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
-		return (free(info), free(info->mlx), 1);
+		return (destroy_loop_hook(info), 1);
 	parse(info, info_map, x * y);
 	info->info_map = info_map;
 	return (EXIT_SUCCESS);
@@ -42,8 +42,16 @@ int	init(t_info *info)
 
 void	destroy_loop_hook(t_info *info)
 {
-	mlx_delete_image(info->mlx, info->img);
-	mlx_terminate(info->mlx);
+	if (!info)
+		return ;
+	if (info->mlx)
+	{
+		if (info->img)
+		{
+			mlx_delete_image(info->mlx, info->img);
+		}
+		mlx_terminate(info->mlx);
+	}
 	free(info->info_map);
 	free(info->path);
 	free(info);
