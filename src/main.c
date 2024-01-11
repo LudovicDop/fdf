@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:18:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/11 13:35:32 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:35:26 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv)
 		info->rotation_angle_x = 0;
 		info->rotation_angle_y = 0;
 		info->rotation_angle_z = 0;
+		info->deg_x = 30;
+		info->deg_y = 30;
 		info->path = ft_strdup(argv[1]);
 		if (!info->path)
 			return (free(info), 1);
