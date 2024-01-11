@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 18:27:01 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/11 14:15:54 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:22:17 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,5 @@ void				parse(t_info *info, t_info_map *info_map, int size);
 unsigned int		merge_rgba(unsigned int color1, unsigned int color2);
 int					abs(int x);
 int					sgn(int x);
+void				additionnal_free(char *tmp, int fd, t_info* info);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:21:21 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/11 14:12:47 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:22:33 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ void	size2(t_info *info, int *x)
 	int		i;
 	char	*tmp;
 
-	(free(0), fd = open_file(info->path), tmp = get_next_line(fd));
-	if (!tmp || fd < 0)
-		return (close(fd), destroy_loop_hook(info));
+	fd = open_file(info->path);
+	tmp = get_next_line(fd);
+	additionnal_free(tmp, fd, info);
 	i = 0;
 	if (tmp)
 	{

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 16:08:05 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 18:26:05 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:22:52 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,10 @@ int	sgn(int x)
 		return (1);
 	else
 		return (0);
+}
+
+void	additionnal_free(char *tmp, int fd, t_info *info)
+{
+	if (!tmp || fd < 0)
+		return (close(fd), destroy_loop_hook(info));
 }
