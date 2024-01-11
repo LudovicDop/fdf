@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_bis3.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:23:09 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 18:28:36 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:46:32 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	isometric_transform(t_rot *rot, float *x_iso, float *y_iso,
 
 	radx = info->deg_x * M_PI / 180;
 	rady = info->deg_y * M_PI / 180;
-	*x_iso = (rot->x0_rot - rot->z0_rot) * cosf(radx) * info->scale;
+	*x_iso = ((rot->x0_rot - rot->z0_rot) * cosf(radx)) * info->scale;
 	*y_iso = (rot->y0_rot + (rot->x0_rot + rot->z0_rot) * sinf(rady))
 		* info->scale;
 }
@@ -91,8 +91,8 @@ void	rotate_about_center_bis(t_info *info, t_info_map *info_map, t_rot *rot)
 		* sinf(info->rotation_angle_z);
 	info->temp_y = info_map->x * sinf(info->rotation_angle_z) + info_map->y
 		* cosf(info->rotation_angle_z);
-	info_map->x = info->temp_x * info->scale;
-	info_map->y = info->temp_y * info->scale;
+	info_map->x = info->temp_x;
+	info_map->y = info->temp_y;
 	info_map->z = info->temp_z;
 	rot->x0_rot = info_map->x + info->center_x;
 	rot->y0_rot = info_map->y + info->center_y;

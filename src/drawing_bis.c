@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_bis.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:21:21 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/11 14:22:33 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:40:42 by ludovicdopp      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	my_map_is_valid(t_info *info, int *x)
 		tmp = get_next_line(fd);
 		if (*x != x_bis)
 		{
-			ft_putstr_fd("Error\n", 1);
+			ft_putstr_fd("Error\n", 2);
 			return (exit(EXIT_FAILURE));
 		}
 		x_bis = 0;
