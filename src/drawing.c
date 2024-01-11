@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 16:37:50 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 18:28:48 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:35:03 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	open_file(char *path)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error\n", 1);
-		exit(EXIT_FAILURE);
 	}
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 14:28:29 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 15:21:06 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:15:27 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,22 @@ int	init(t_info *info)
 	int			y;
 
 	x = 0;
-	y = -1;
+	y = 0;
 	size(info, &x, &y);
 	info->height = y;
 	info->width = x;
 	info_map = ft_calloc((x + 1) * y, sizeof(t_info_map));
+	if (!info_map)
+		return (free(info), 1);
 	mlx_set_setting(MLX_MAXIMIZED, true);
 	info->mlx = mlx_init(WIDTH, HEIGHT, "42FDF", true);
 	if (!info->mlx)
-		error();
+		return (free(info), 1);
 	info->img = mlx_new_image(info->mlx, info->mlx->width, info->mlx->height);
 	if (!info->img)
-		error();
+		return (free(info), free(info->mlx), 1);
 	if (mlx_image_to_window(info->mlx, info->img, 0, 0) < 0)
-		error();
+		return (free(info), free(info->mlx), 1);
 	parse(info, info_map, x * y);
 	info->info_map = info_map;
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:24:12 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/09 17:28:53 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 13:52:19 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	parse(t_info *info, t_info_map *info_map, int size)
 	char	*buffer;
 
 	fd = open_file(info->path);
+	if (fd < 0)
+		return (destroy_loop_hook(info));
 	buffer = get_next_line(fd);
 	info_map[0].origin_x = 0;
 	info_map[0].origin_y = 0;

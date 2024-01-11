@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:18:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 18:14:05 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/01/11 13:35:32 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		info = ft_calloc(1, sizeof(t_info));
+		if (!info)
+			return (1);
 		info->scale = 2.0;
 		info->rotation_angle_x = 0;
 		info->rotation_angle_y = 0;
 		info->rotation_angle_z = 0;
-		if (!info)
-			return (1);
 		info->path = ft_strdup(argv[1]);
 		if (!info->path)
 			return (free(info), 1);
@@ -34,5 +34,7 @@ int	main(int argc, char **argv)
 		mlx_loop(info->mlx);
 		destroy_loop_hook(info);
 	}
+	else
+		ft_putstr_fd("Error\n", 2);
 	return (0);
 }

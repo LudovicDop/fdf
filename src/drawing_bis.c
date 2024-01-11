@@ -6,7 +6,7 @@
 /*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 15:21:21 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/10 15:25:13 by ldoppler         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:12:47 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	my_map_is_valid(t_info *info, int *x)
 	fd = open_file(info->path);
 	tmp = get_next_line(fd);
 	if (!tmp)
-		return ;
+		return (destroy_loop_hook(info));
 	while (tmp)
 	{
 		my_map_is_valid_bis(tmp, &x_bis);
@@ -71,15 +71,12 @@ void	size2(t_info *info, int *x)
 	int		i;
 	char	*tmp;
 
-	fd = open_file(info->path);
-	tmp = ft_calloc(1, 1);
-	if (!tmp)
-		return ;
+	(free(0), fd = open_file(info->path), tmp = get_next_line(fd));
+	if (!tmp || fd < 0)
+		return (close(fd), destroy_loop_hook(info));
 	i = 0;
 	if (tmp)
 	{
-		free(tmp);
-		tmp = get_next_line(fd);
 		while (tmp[i])
 		{
 			if (tmp[i] != ' ' && tmp[i] != '\n')
@@ -88,8 +85,11 @@ void	size2(t_info *info, int *x)
 				while (tmp[i] && tmp[i] != ' ' && tmp[i] != '\n')
 					i++;
 			}
-			i++;
+			if (tmp[i])
+				i++;
 		}
+		free(tmp);
+		tmp = get_next_line(fd);
 	}
 	return (end(tmp, fd), my_map_is_valid(info, x), close(fd), free(tmp));
 }
@@ -100,15 +100,23 @@ void	size(t_info *info, int *x, int *y)
 	char	*tmp;
 
 	fd = open_file(info->path);
-	tmp = ft_calloc(1, 1);
+	if (fd < 0)
+		return (free(info->path), free(info), exit(EXIT_FAILURE));
+	tmp = get_next_line(fd);
 	if (!tmp)
-		return ;
+	{
+		ft_putstr_fd("Error empty map\n", 2);
+		close(fd);
+		return (free(info->path), free(info), exit(EXIT_FAILURE));
+	}
 	while (tmp)
 	{
+		*y += 1;
 		free(tmp);
 		tmp = get_next_line(fd);
-		*y += 1;
 	}
+	if (*y == 0)
+		return (ft_putstr_fd("Error\n", 2), exit(EXIT_FAILURE));
 	close(fd);
 	free(tmp);
 	size2(info, x);
