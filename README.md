@@ -17,5 +17,6 @@ W = increase x axes
 S = degrease x axes         
 D = ingrease y axes
 A = degrease y axes
+
 X = Zoom
 C = Dezoomer
