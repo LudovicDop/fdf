@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ludovicdoppler <ludovicdoppler@student.    +#+  +:+       +#+        */
+/*   By: ldoppler <ldoppler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 15:18:53 by ldoppler          #+#    #+#             */
-/*   Updated: 2024/01/11 14:35:26 by ludovicdopp      ###   ########.fr       */
+/*   Updated: 2024/01/12 12:49:46 by ldoppler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 		info = ft_calloc(1, sizeof(t_info));
 		if (!info)
 			return (1);
-		info->scale = 2.0;
+		info->scale = 20.0;
 		info->rotation_angle_x = 0;
 		info->rotation_angle_y = 0;
 		info->rotation_angle_z = 0;
