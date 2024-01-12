@@ -14,9 +14,13 @@ How can I launch this project :
 Useful touch :
 
 W = increase x axes
+
 S = degrease x axes
+
 D = ingrease y axes
+
 A = degrease y axes
 
 X = Zoom
+
 C = Dezoomer
