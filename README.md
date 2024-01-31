@@ -25,4 +25,4 @@ X = Zoom
 
 C = Dezoomer
 
-<img src="https://github.com/LudovicDop/img/blob/main/42.jpg?raw=true" width="350" >
+<img src="https://github.com/LudovicDop/img/blob/main/logo-ecole-42-mulhouse.jpg" width="350" >
