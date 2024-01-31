@@ -1,3 +1,4 @@
+![alt text](https://github.com/LudovicDop/img/blob/main/42.jpg?raw=true)
 # FDF
 
 Subject : This project involves creating a wireframe rendering of a landscape.
@@ -25,4 +26,3 @@ X = Zoom
 
 C = Dezoomer
 
-![alt text](https://github.com/LudovicDop/img/blob/main/42.jpg?raw=true)
