@@ -1,4 +1,3 @@
-<img src="https://github.com/LudovicDop/img/blob/main/42.jpg?raw=true" width="350" text-align=center>
 # FDF
 
 Subject : This project involves creating a wireframe rendering of a landscape.
@@ -25,4 +24,4 @@ A = degrease y axes
 X = Zoom
 
 C = Dezoomer
-
+<img src="https://github.com/LudovicDop/img/blob/main/42.jpg?raw=true" width="350" >
