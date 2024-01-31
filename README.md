@@ -24,4 +24,5 @@ A = degrease y axes
 X = Zoom
 
 C = Dezoomer
+
 <img src="https://github.com/LudovicDop/img/blob/main/42.jpg?raw=true" width="350" >
